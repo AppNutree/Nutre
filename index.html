@@ -23,7 +23,7 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0; padding: 0;
-            background-color: #7b947e; /* El fondo verde oscuro detrás del celular */
+            background-color: #7b947e; 
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
         }
@@ -35,22 +35,21 @@
             box-shadow: 0 12px 30px rgba(0,0,0,0.3);
             overflow-y: auto; position: relative;
             display: flex; flex-direction: column;
-            border-radius: 30px; border: 8px solid #222; /* Bordes redondeados y marco negro */
+            border-radius: 30px; border: 8px solid #222; 
         }
 
-        /* Oculta la barrita fea de scroll del lado derecho */
         #app-container::-webkit-scrollbar { width: 4px; }
         #app-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 4px; }
 
         /* --- CLASE PARA OCULTAR O MOSTRAR PANTALLAS --- */
         .pantalla {
-            display: none; /* Todas las pantallas están ocultas por defecto */
+            display: none; 
             width: 100%; height: 100%; padding: 1.5rem;
-            animation: fadeIn 0.25s ease-in-out; /* Efecto de aparición suave */
+            animation: fadeIn 0.25s ease-in-out; 
             flex-direction: column; overflow-y: auto;
         }
         .pantalla.activa { 
-            display: flex; /* Solo se muestra la que tenga la palabra "activa" */
+            display: flex; 
         }
 
         @keyframes fadeIn {
@@ -79,6 +78,12 @@
         .checkbox-group input { margin-right: 8px; margin-top: 2px; accent-color: var(--verde-principal); }
         .link-volver { cursor: pointer; color: var(--gris-texto); margin-bottom: 12px; font-size: 0.85rem; display: inline-block; }
 
+        /* Botones de switch en el Login */
+        .toggle-container { display: flex; gap: 8px; margin-bottom: 15px; }
+        .toggle-btn { flex: 1; padding: 9px; border: 1px solid #ccc; background: white; border-radius: 8px; cursor: pointer; color: var(--gris-texto); font-size: 0.85rem;}
+        .toggle-btn.activo { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
+        .olvide-pass { text-align: right; font-size: 0.75rem; color: var(--verde-principal); cursor: pointer; margin-top: -6px; margin-bottom: 15px; display: block; }
+
         /* --- CABECERAS VERDES DE ARRIBA --- */
         .header-verde-app { background-color: var(--verde-principal); color: white; margin: -1.5rem -1.5rem 1rem -1.5rem; padding: 1.5rem; border-radius: 20px 20px 0 0; }
         .header-verde-app h3 { margin: 0; font-size: 1.2rem; font-weight: 600; }
@@ -92,7 +97,7 @@
         .tarjeta-detalles { font-size: 0.8rem; color: var(--gris-texto); margin: 4px 0; }
         .tarjeta-btn-reservar { background: var(--verde-principal); color: white; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 8px; font-size: 0.85rem; }
 
-        /* --- BARRA DE BOTONES ABAJO (INICIO, BUSCAR, SALIR) --- */
+        /* --- BARRA DE BOTONES ABAJO --- */
         .nav-bar-inferior { display: flex; justify-content: space-around; background: white; border-top: 1px solid #eee; margin: auto -1.5rem -1.5rem -1.5rem; padding: 10px 0; position: sticky; bottom: 0; }
         .nav-item { text-align: center; font-size: 0.7rem; color: var(--gris-suave); cursor: pointer; flex: 1; }
         .nav-item.activo { color: var(--verde-principal); font-weight: bold; }
@@ -116,8 +121,10 @@
 </head>
 <body>
 
+    <!-- AQUÍ EMPIEZA LA APP -->
     <div id="app-container">
 
+        <!-- PANTALLA 1: BIENVENIDA -->
         <div id="pantalla-bienvenida" class="pantalla activa">
             <div class="header-central">
                 <img src="logo.png" alt="Logo Nutre" class="logo-img">
@@ -138,6 +145,34 @@
             </div>
         </div>
 
+        <!-- PANTALLA 2: INICIAR SESIÓN (RESTAURADA) -->
+        <div id="pantalla-login" class="pantalla">
+            <span class="link-volver" onclick="navegar('pantalla-bienvenida')">← Volver</span>
+            <h2>Iniciar sesión</h2>
+            <label>¿Quién eres?</label>
+            <div class="toggle-container">
+                <button id="login-tab-familia" class="toggle-btn activo" onclick="setLoginTipo('familia')">Familia</button>
+                <button id="login-tab-donante" class="toggle-btn" onclick="setLoginTipo('donante')">Donante</button>
+            </div>
+            
+            <div class="form-group">
+                <label>Correo o celular</label>
+                <input type="email" placeholder="ejemplo@correo.com">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" placeholder="••••••••">
+            </div>
+            <span class="olvide-pass">¿Olvidaste tu contraseña?</span>
+            
+            <button class="btn btn-primario" onclick="ejecutarLogin()">Ingresar</button>
+            
+            <div class="enlace-footer">
+                ¿No tienes cuenta? <span onclick="navegar('pantalla-registro-familia')">Regístrate gratis</span>
+            </div>
+        </div>
+
+        <!-- PANTALLA 3: REGISTRO DE FAMILIA -->
         <div id="pantalla-registro-familia" class="pantalla">
             <span class="link-volver" onclick="navegar('pantalla-bienvenida')">← Volver</span>
             <div><span class="etiqueta-top">Registro — Familia</span></div>
@@ -159,6 +194,7 @@
             <button class="btn btn-primario" style="margin-top: 10px;" onclick="irAlFeedFamilias()">Crear cuenta gratis</button>
         </div>
 
+        <!-- PANTALLA 4: REGISTRO DE NEGOCIO (DONANTE) -->
         <div id="pantalla-registro-donante" class="pantalla" style="padding-top: 0;">
             <div class="header-verde-app" style="margin-bottom: 1rem;">
                 <span style="cursor:pointer; color:white; margin-bottom:10px; display:block; font-size: 0.85rem;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
@@ -168,11 +204,11 @@
             
             <div class="form-group">
                 <label>Nombre del negocio</label>
-                <input id="reg-don-nombre" type="text" placeholder="Ej. Panadería Don Pepe">
+                <input id="reg-don-nombre" type="text" placeholder="Ej. Panadería El Sol">
             </div>
             <div class="form-group">
                 <label>Dirección física</label>
-                <input id="reg-don-direccion" type="text" placeholder="Ej. Cercado de Lima">
+                <input id="reg-don-direccion" type="text" placeholder="Ej. Av. Próceres 240, SJL">
             </div>
             <div class="form-group">
                 <label>Correo de contacto</label>
@@ -186,6 +222,7 @@
             <button class="btn btn-primario" onclick="registrarNegocio()">Registrar negocio</button>
         </div>
 
+        <!-- PANTALLA 5: VER COMIDA DISPONIBLE (ZONA FAMILIAS) -->
         <div id="pantalla-principal-receptor" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
             <div class="header-verde-app">
                 <h3>NoDesperdicies</h3>
@@ -193,6 +230,7 @@
             </div>
             <div class="ubicacion-bar">📍 Buscando cerca de ti...</div>
 
+            <!-- Aquí van a aparecer los alimentos desde la base de datos -->
             <div id="feed-alimentos" style="flex: 1; padding-bottom: 10px;">
                 <p style="text-align: center; color: #888; font-size: 0.9rem;">Cargando alimentos...</p>
             </div>
@@ -204,12 +242,14 @@
             </div>
         </div>
 
+        <!-- PANTALLA 8: MI PANEL (ZONA DONANTE) -->
         <div id="pantalla-panel-donante" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
             <div class="header-verde-app" style="margin-bottom: 1rem;">
                 <h3>Panel donante</h3>
                 <p id="panel-nombre-negocio">Cargando nombre...</p>
             </div>
 
+            <!-- Estos números cambian automáticamente con Firebase -->
             <div class="row-metricas">
                 <div class="metrica-card">
                     <span id="panel-metrica-kg" class="metrica-num">0</span>
@@ -227,18 +267,19 @@
 
             <h4 style="margin: 5px 0 10px 0; color: var(--verde-principal);">Publicar excedente</h4>
             
+            <!-- Formulario para regalar comida -->
             <div style="flex: 1; overflow-y: auto; padding-right: 2px;">
                 <div class="form-group">
                     <label>Nombre del producto</label>
-                    <input id="pub-nombre" type="text" placeholder="Ej. Pan francés">
+                    <input id="pub-nombre" type="text" placeholder="Ej. Baguettes de ayer">
                 </div>
                 <div class="form-group">
-                    <label>Cantidad (Ej. 10 unidades o 3 kg)</label>
-                    <input id="pub-cantidad" type="text" placeholder="Ej. 10 unidades">
+                    <label>Cantidad</label>
+                    <input id="pub-cantidad" type="text" placeholder="Ej. 3 kg">
                 </div>
                 <div class="form-group">
                     <label>Dirección de recojo</label>
-                    <input id="pub-direccion" type="text" placeholder="Ej. Unidad Vecinal #3">
+                    <input id="pub-direccion" type="text" placeholder="Ej. Av. Próceres 240">
                 </div>
                 <div class="form-row">
                     <div class="form-group" style="flex:1;">
@@ -263,6 +304,7 @@
 
     </div>
 
+    <!-- CONECTAMOS CON FIREBASE AQUÍ ABAJO -->
     <script type="module">
         // Importamos las herramientas de Google Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
@@ -287,19 +329,34 @@
         // Espacios para recordar quién está usando la app
         window.usuarioActualUID = null;
         window.usuarioActualNombre = "";
+        window.tipoUsuarioActual = 'familia'; 
 
         // FUNCIÓN 1: Cambiar de pantalla fácilmente
         window.navegar = function(idPantallaDestino) {
-            // Escondemos todas las pantallas
             const pantallas = document.querySelectorAll('.pantalla');
             pantallas.forEach(p => p.classList.remove('activa'));
             
-            // Mostramos solo la que nos interesa y subimos al inicio
             document.getElementById(idPantallaDestino).classList.add('activa');
             document.getElementById(idPantallaDestino).scrollTop = 0; 
         }
 
-        // FUNCIÓN 2: Guardar al Donante en la base de datos
+        // FUNCIÓN 2: Configurar los botones de Iniciar Sesión (Familia o Donante)
+        window.setLoginTipo = function(tipo) {
+            window.tipoUsuarioActual = tipo;
+            document.getElementById('login-tab-familia').classList.toggle('activo', tipo === 'familia');
+            document.getElementById('login-tab-donante').classList.toggle('activo', tipo === 'donante');
+        }
+
+        // FUNCIÓN 3: Acción del botón "Ingresar"
+        window.ejecutarLogin = function() {
+            if(window.tipoUsuarioActual === 'familia') {
+                irAlFeedFamilias(); 
+            } else {
+                navegar('pantalla-panel-donante');
+            }
+        }
+
+        // FUNCIÓN 4: Guardar al Donante en la base de datos
         window.registrarNegocio = async function() {
             const nombre = document.getElementById('reg-don-nombre').value;
             const email = document.getElementById('reg-don-email').value;
@@ -337,13 +394,12 @@
             }
         }
 
-        // FUNCIÓN 3: Subir la comida a la nube
+        // FUNCIÓN 5: Subir la comida a la nube
         window.publicarExcedente = async function() {
             if(!window.usuarioActualUID) {
-                return alert("Primero debes registrarte.");
+                return alert("Primero debes registrarte para publicar.");
             }
 
-            // Tomamos lo que escribió en las cajas
             const producto = document.getElementById('pub-nombre').value;
             const cantidad = document.getElementById('pub-cantidad').value;
             const direccion = document.getElementById('pub-direccion').value;
@@ -364,27 +420,25 @@
                     donanteNombre: window.usuarioActualNombre
                 });
 
-                // Calculamos cuánto sumarle a sus "kg salvados"
                 let numeroSalvado = parseFloat(cantidad) || 1;
 
-                // Sumamos +1 a sus publicaciones en la nube
+                // Sumamos a sus métricas en la nube
                 await updateDoc(doc(db, "usuarios", window.usuarioActualUID), {
                     publicaciones: increment(1),
                     kgSalvados: increment(numeroSalvado)
                 });
 
-                // Mostramos el nuevo número en su pantalla
+                // Actualizamos los números que ve en la pantalla
                 let pubsVisuales = parseInt(document.getElementById('panel-metrica-pubs').innerText);
                 let kgVisuales = parseInt(document.getElementById('panel-metrica-kg').innerText);
                 document.getElementById('panel-metrica-pubs').innerText = pubsVisuales + 1;
                 document.getElementById('panel-metrica-kg').innerText = kgVisuales + numeroSalvado;
 
-                // Borramos las cajas para que pueda escribir otra vez
                 document.getElementById('pub-nombre').value = '';
                 document.getElementById('pub-cantidad').value = '';
 
                 alert('¡Publicado con éxito!');
-                irAlFeedFamilias(); // Lo llevamos a ver cómo quedó su publicación
+                irAlFeedFamilias(); 
 
             } catch (error) {
                 alert("Hubo un error guardando el alimento. Revisa tu base de datos.");
@@ -392,24 +446,21 @@
             }
         }
 
-        // FUNCIÓN 4: Cargar las comidas guardadas y mostrarlas
+        // FUNCIÓN 6: Cargar las comidas guardadas y mostrarlas
         window.irAlFeedFamilias = async function() {
             navegar('pantalla-principal-receptor');
             const feed = document.getElementById('feed-alimentos');
             feed.innerHTML = '<p style="text-align:center; margin-top: 20px;">Buscando alimentos...</p>';
 
             try {
-                // Pedimos todos los alimentos a Firebase
                 const querySnapshot = await getDocs(collection(db, "alimentos"));
                 feed.innerHTML = ''; 
 
-                // Si no hay ninguno, avisamos
                 if(querySnapshot.empty) {
                     feed.innerHTML = '<p style="text-align:center; margin-top:20px; color:#666;">No hay comida disponible ahora mismo.</p>';
                     return;
                 }
 
-                // Por cada alimento que encuentre, dibujamos un cuadrito
                 querySnapshot.forEach((documento) => {
                     const data = documento.data();
                     feed.innerHTML += `
