@@ -7,121 +7,153 @@
     <style>
         :root {
             --verde-principal: #1b431e;
+            --verde-oscuro: #112b13;
             --verde-claro: #eaf1ea;
             --blanco: #ffffff;
-            --gris-texto: #666666;
+            --gris-texto: #555555;
+            --gris-suave: #999999;
             --fondo-input: #f4f7f4;
+            --naranja-alerta: #fff3cd;
+            --naranja-texto: #856404;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #7b947e; /* Fondo verde acorde a tus capturas */
+            background-color: #7b947e; /* Fondo verde de tus capturas */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
+        /* Contenedor tipo celular para PC, adaptable en móviles */
         #app-container {
             width: 100%;
-            max-width: 400px; 
+            max-width: 410px; 
             height: 100vh;
-            max-height: 800px;
-            background-color: var(--blanco);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            max-height: 840px;
+            background-color: #fcfdfc;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
             overflow-y: auto;
             position: relative;
-            box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            border-radius: 30px; /* Bordes redondeados simulando celular */
-            border: 8px solid #333; /* Marco de celular */
+            border-radius: 30px;
+            border: 8px solid #222;
         }
 
+        /* Quitar barras de scroll molestas en el contenedor principal */
+        #app-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        #app-container::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        /* Control de Pantallas */
         .pantalla {
             display: none;
             width: 100%;
             height: 100%;
-            padding: 2rem;
-            box-sizing: border-box;
-            animation: fadeIn 0.3s ease-in-out;
+            padding: 1.5rem;
+            animation: fadeIn 0.25s ease-in-out;
             flex-direction: column;
+            overflow-y: auto;
         }
         .pantalla.activa {
             display: flex;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- ESTILOS GENERALES Y BOTONES --- */
-        h2 { color: var(--verde-principal); margin-top: 0; }
-        .etiqueta-top { font-size: 0.8rem; background: var(--verde-claro); color: var(--verde-principal); padding: 4px 10px; border-radius: 12px; display: inline-block; margin-bottom: 10px; font-weight: bold;}
+        /* --- COMPONENTES COMUNES --- */
+        h2 { color: var(--verde-principal); margin-top: 0; font-size: 1.4rem; }
+        .etiqueta-top { font-size: 0.75rem; background: var(--verde-claro); color: var(--verde-principal); padding: 4px 10px; border-radius: 12px; display: inline-block; margin-bottom: 12px; font-weight: bold;}
         
-        .btn { width: 100%; padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; font-weight: 600; cursor: pointer; margin-bottom: 1rem; transition: all 0.2s; }
+        .btn { width: 100%; padding: 0.9rem; border-radius: 8px; border: none; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-bottom: 0.8rem; transition: all 0.2s; text-align: center;}
         .btn-primario { background-color: var(--verde-principal); color: white; }
+        .btn-primario:hover { background-color: var(--verde-oscuro); }
         .btn-secundario { background-color: white; color: var(--verde-principal); border: 2px solid var(--verde-principal); }
 
-        /* --- FORMULARIOS --- */
-        .form-group { margin-bottom: 1.2rem; }
-        label { display: block; font-size: 0.85rem; color: var(--gris-texto); margin-bottom: 5px; }
-        input[type="text"], input[type="email"], input[type="password"] {
-            width: 100%; padding: 12px; border: none; background-color: var(--fondo-input); border-radius: 8px; box-sizing: border-box; font-size: 0.95rem; outline: none;
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; font-size: 0.8rem; color: var(--gris-texto); margin-bottom: 4px; font-weight: 500; }
+        input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="time"], input[type="date"] {
+            width: 100%; padding: 11px; border: 1px solid #e0e0e0; background-color: var(--fondo-input); border-radius: 8px; font-size: 0.9rem; outline: none;
         }
-        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
-            border: 1px solid var(--verde-principal);
-        }
+        input:focus { border-color: var(--verde-principal); background-color: white; }
 
-        .checkbox-group { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 0.85rem; color: var(--gris-texto); }
-        .checkbox-group input { margin-right: 10px; margin-top: 3px; accent-color: var(--verde-principal); }
+        .checkbox-group { display: flex; align-items: flex-start; margin-bottom: 8px; font-size: 0.8rem; color: var(--gris-texto); }
+        .checkbox-group input { margin-right: 8px; margin-top: 2px; accent-color: var(--verde-principal); }
 
-        /* --- PANTALLA 1: BIENVENIDA --- */
-        .header-central { text-align: center; margin-top: 1rem; margin-bottom: 2rem; }
-        
-        /* AQUÍ ESTÁ EL CAMBIO DEL LOGO EN EL CSS */
-        .logo-img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            border-radius: 20px;
-            margin: 0 auto 1rem;
-            display: block;
-            background-color: var(--blanco);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
+        .link-volver { cursor: pointer; color: var(--gris-texto); margin-bottom: 12px; font-size: 0.85rem; display: inline-block; }
 
+        /* --- HEADERS SUPERIORES --- */
+        .header-verde-app { background-color: var(--verde-principal); color: white; margin: -1.5rem -1.5rem 1rem -1.5rem; padding: 1.5rem; border-radius: 20px 20px 0 0; }
+        .header-verde-app h3 { margin: 0; font-size: 1.2rem; font-weight: 600; }
+        .header-verde-app p { margin: 4px 0 0 0; font-size: 0.8rem; opacity: 0.85; }
+        .ubicacion-bar { display: flex; align-items: center; gap: 4px; font-size: 0.8rem; color: #d84315; font-weight: bold; margin-bottom: 12px; }
+
+        /* --- TARJETAS DE ALIMENTOS (PANTALLA 5) --- */
+        .tarjeta-alimento { background: white; border: 1px solid #eef2ee; border-radius: 12px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .tarjeta-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .tarjeta-titulo { font-weight: bold; color: #333; font-size: 1rem; margin: 0; }
+        .tarjeta-detalles { font-size: 0.8rem; color: var(--gris-texto); margin: 4px 0; }
+        .tarjeta-btn-reservar { background: var(--verde-principal); color: white; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 8px; font-size: 0.85rem; }
+
+        /* --- NAV BAR INFERIOR --- */
+        .nav-bar-inferior { display: flex; justify-content: space-around; background: white; border-top: 1px solid #eee; margin: auto -1.5rem -1.5rem -1.5rem; padding: 10px 0; position: sticky; bottom: 0; }
+        .nav-item { text-align: center; font-size: 0.7rem; color: var(--gris-suave); cursor: pointer; flex: 1; }
+        .nav-item.activo { color: var(--verde-principal); font-weight: bold; }
+
+        /* --- RECOJO Y HORAS (PANTALLA 6) --- */
+        .grid-horas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0 15px 0; }
+        .hora-box { border: 1px solid #ddd; padding: 10px; text-align: center; border-radius: 6px; font-size: 0.8rem; cursor: pointer; background: white; font-weight: 500; }
+        .hora-box.seleccionada { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
+        .nota-donante { background: #fffde7; border-left: 4px solid #fdd835; padding: 10px; font-size: 0.8rem; border-radius: 4px; margin-bottom: 15px; font-style: italic; color: #555; }
+
+        /* --- RESERVA CONFIRMADA (PANTALLA 7) --- */
+        .reserva-box-datos { background: var(--verde-claro); padding: 12px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 15px; }
+        .reserva-fila { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed rgba(0,0,0,0.05); }
+        .qr-placeholder { width: 100px; height: 100px; background: var(--verde-principal); margin: 15px auto; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; }
+        .caja-advertencia { background: var(--naranja-alerta); color: var(--naranja-texto); padding: 10px; border-radius: 8px; font-size: 0.75rem; line-height: 1.4; text-align: center; margin-bottom: 15px; }
+
+        /* --- PANEL DONANTE (PANTALLA 8) --- */
+        .row-metricas { display: flex; gap: 8px; margin-bottom: 15px; }
+        .metrica-card { flex: 1; background: var(--verde-claro); text-align: center; padding: 10px 4px; border-radius: 8px; border: 1px solid #d0e0d0; }
+        .metrica-num { font-size: 1.2rem; font-weight: bold; color: var(--verde-principal); display: block; }
+        .metrica-lbl { font-size: 0.65rem; color: var(--gris-texto); }
+        .form-row { display: flex; gap: 8px; }
+
+        /* Estilos específicos para pantallas */
+        .logo-img { width: 85px; height: 85px; object-fit: contain; border-radius: 20px; margin: 0 auto 0.8rem; display: block; }
+        .header-central { text-align: center; margin-top: 0.5rem; margin-bottom: 1.5rem; }
         .header-central h1 { color: var(--verde-principal); margin: 0; font-size: 1.5rem; }
-        .header-central p { color: var(--gris-texto); font-size: 0.9rem; margin-top: 5px; }
-        
-        .caja-info { background-color: var(--verde-claro); padding: 1.5rem; border-radius: 12px; text-align: center; margin-bottom: 2.5rem; color: var(--verde-principal); font-size: 0.95rem; line-height: 1.5; }
-        .enlace-footer { text-align: center; font-size: 0.9rem; color: var(--gris-texto); margin-top: auto; padding-top: 1rem; }
+        .header-central p { color: var(--gris-texto); font-size: 0.85rem; margin-top: 4px; }
+        .caja-info { background-color: var(--verde-claro); padding: 1.2rem; border-radius: 12px; text-align: center; margin-bottom: 2rem; color: var(--verde-principal); font-size: 0.9rem; line-height: 1.4; }
+        .enlace-footer { text-align: center; font-size: 0.85rem; color: var(--gris-texto); margin-top: auto; padding-top: 1rem; }
         .enlace-footer span { color: var(--verde-principal); font-weight: bold; cursor: pointer; text-decoration: underline; }
-
-        /* --- PANTALLA 2: LOGIN --- */
-        .toggle-container { display: flex; gap: 10px; margin-bottom: 20px; }
-        .toggle-btn { flex: 1; padding: 10px; border: 1px solid #ccc; background: white; border-radius: 8px; cursor: pointer; color: var(--gris-texto); }
+        .toggle-container { display: flex; gap: 8px; margin-bottom: 15px; }
+        .toggle-btn { flex: 1; padding: 9px; border: 1px solid #ccc; background: white; border-radius: 8px; cursor: pointer; color: var(--gris-texto); font-size: 0.85rem;}
         .toggle-btn.activo { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
-        .olvide-pass { text-align: right; font-size: 0.8rem; color: var(--verde-principal); cursor: pointer; margin-top: -10px; margin-bottom: 20px; display: block; }
-
-        /* --- PANTALLA 4: HEADER DONANTE --- */
-        .header-donante { background-color: var(--verde-principal); color: white; margin: -2rem -2rem 1.5rem -2rem; padding: 2rem; border-radius: 30px 30px 0 0; }
-        .header-donante h2 { color: white; margin: 0 0 5px 0; }
-        .header-donante p { margin: 0; font-size: 0.85rem; opacity: 0.9; }
-
+        .olvide-pass { text-align: right; font-size: 0.75rem; color: var(--verde-principal); cursor: pointer; margin-top: -6px; margin-bottom: 15px; display: block; }
     </style>
 </head>
 <body>
 
     <div id="app-container">
 
-        <!-- PANTALLA 1: BIENVENIDA -->
         <div id="pantalla-bienvenida" class="pantalla activa">
             <div class="header-central">
-                <!-- AQUÍ ESTÁ EL CAMBIO DEL LOGO EN EL HTML -->
                 <img src="logo.png" alt="Logo Nutre" class="logo-img">
                 <h1>NUTRE</h1>
                 <p>Conectamos alimentos con familias</p>
@@ -137,14 +169,13 @@
             </div>
         </div>
 
-        <!-- PANTALLA 2: INICIAR SESIÓN -->
         <div id="pantalla-login" class="pantalla">
-            <span style="cursor:pointer; color:var(--gris-texto); margin-bottom:15px;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
+            <span class="link-volver" onclick="navegar('pantalla-bienvenida')">← Volver</span>
             <h2>Iniciar sesión</h2>
             <label>¿Quién eres?</label>
             <div class="toggle-container">
-                <button class="toggle-btn activo">Familia</button>
-                <button class="toggle-btn" onclick="navegar('pantalla-registro-donante')">Donante</button>
+                <button id="login-tab-familia" class="toggle-btn activo" onclick="setLoginTipo('familia')">Familia</button>
+                <button id="login-tab-donante" class="toggle-btn" onclick="setLoginTipo('donante')">Donante</button>
             </div>
             
             <div class="form-group">
@@ -157,97 +188,13 @@
             </div>
             <span class="olvide-pass">¿Olvidaste tu contraseña?</span>
             
-            <button class="btn btn-primario" onclick="alert('Aquí entraremos a la App Principal en el siguiente paso')">Ingresar</button>
+            <button class="btn btn-primario" onclick="ejecutarLogin()">Ingresar</button>
             
             <div class="enlace-footer">
                 ¿No tienes cuenta? <span onclick="navegar('pantalla-registro-familia')">Regístrate gratis</span>
             </div>
         </div>
 
-        <!-- PANTALLA 3: REGISTRO FAMILIA -->
         <div id="pantalla-registro-familia" class="pantalla">
-            <span style="cursor:pointer; color:var(--gris-texto); margin-bottom:15px;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
-            <div><span class="etiqueta-top">Registro — Familia</span></div>
-            <h2>Crea tu cuenta</h2>
-            
-            <div class="form-group">
-                <label>Nombre completo</label>
-                <input type="text" placeholder="Tu nombre">
-            </div>
-            <div class="form-group">
-                <label>Correo o celular</label>
-                <input type="text" placeholder="ejemplo@correo.com">
-            </div>
-            <div class="form-group">
-                <label>Distrito</label>
-                <input type="text" placeholder="San Juan de Lurigancho">
-            </div>
-            <div class="form-group">
-                <label>Contraseña</label>
-                <input type="password" placeholder="••••••••">
-            </div>
-            
-            <div class="checkbox-group">
-                <input type="checkbox" checked>
-                <label>Acepto los términos y condiciones</label>
-            </div>
-            <div class="checkbox-group">
-                <input type="checkbox" checked>
-                <label>Acepto el uso de mis datos para la app</label>
-            </div>
-            
-            <button class="btn btn-primario" style="margin-top: 15px;" onclick="alert('Aquí entraremos a la App Principal en el siguiente paso')">Crear cuenta gratis</button>
-        </div>
-
-        <!-- PANTALLA 4: REGISTRO DONANTE -->
-        <div id="pantalla-registro-donante" class="pantalla" style="padding-top: 0;">
-            <div class="header-donante">
-                <span style="cursor:pointer; color:white; margin-bottom:15px; display:block;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
-                <h2>Registro donante</h2>
-                <p>Restaurante, mercado o negocio</p>
-            </div>
-            
-            <div><span class="etiqueta-top">Donante</span></div>
-            
-            <div class="form-group">
-                <label>Nombre del negocio</label>
-                <input type="text" placeholder="Panadería El Sol">
-            </div>
-            <div class="form-group">
-                <label>Tipo de negocio</label>
-                <input type="text" placeholder="Panadería">
-            </div>
-            <div class="form-group">
-                <label>Dirección</label>
-                <input type="text" placeholder="Av. Próceres 240, SJL">
-            </div>
-            <div class="form-group">
-                <label>Correo de contacto</label>
-                <input type="email" placeholder="negocio@correo.com">
-            </div>
-            <div class="form-group">
-                <label>Contraseña</label>
-                <input type="password" placeholder="••••••••">
-            </div>
-            
-            <div class="checkbox-group">
-                <input type="checkbox" checked>
-                <label style="color: var(--verde-principal); font-weight: bold;">Me comprometo a donar en buen estado</label>
-            </div>
-            
-            <button class="btn btn-primario" style="margin-top: 10px;" onclick="alert('Aquí entraremos al Panel de Donante en el siguiente paso')">Registrar negocio</button>
-        </div>
-
-    </div>
-
-    <script>
-        function navegar(idPantallaDestino) {
-            const pantallas = document.querySelectorAll('.pantalla');
-            pantallas.forEach(pantalla => {
-                pantalla.classList.remove('activa');
-            });
-            document.getElementById(idPantallaDestino).classList.add('activa');
-        }
-    </script>
-</body>
-</html>
+            <span class="link-volver
+                
