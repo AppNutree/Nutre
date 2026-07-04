@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NUTRE - Conectamos alimentos con familias</title>
     <style>
-        /* =========================================
-           VARIABLES GLOBALES DE DISEÑO (COLORES)
-           ========================================= */
+        /* --- COLORES DE LA PÁGINA --- */
         :root {
             --verde-principal: #1b431e;
             --verde-oscuro: #112b13;
@@ -20,64 +18,39 @@
             --naranja-texto: #856404;
         }
 
-        /* =========================================
-           RESET Y ESTILOS BASE
-           ========================================= */
-        *, *::before, *::after { 
-            box-sizing: border-box; 
-        }
-
+        /* --- ESTILO DEL FONDO GRANDE --- */
+        *, *::before, *::after { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0; 
-            padding: 0;
-            background-color: #7b947e; /* Color de fondo general fuera de la app */
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
+            margin: 0; padding: 0;
+            background-color: #7b947e; /* El fondo verde oscuro detrás del celular */
+            display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
         }
 
-        /* =========================================
-           CONTENEDOR PRINCIPAL (ESTRUCTURA MÓVIL)
-           Sirve para delimitar el área visible de la app, 
-           simulando la pantalla de un dispositivo móvil.
-           ========================================= */
+        /* --- EL CUADRO QUE SIMULA EL CELULAR --- */
         #app-container {
-            width: 100%; 
-            max-width: 410px; 
-            height: 100vh; 
-            max-height: 840px;
+            width: 100%; max-width: 410px; height: 100vh; max-height: 840px;
             background-color: #fcfdfc;
             box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-            overflow-y: auto; 
-            position: relative;
-            display: flex; 
-            flex-direction: column;
-            border-radius: 30px; 
-            border: 8px solid #222;
+            overflow-y: auto; position: relative;
+            display: flex; flex-direction: column;
+            border-radius: 30px; border: 8px solid #222; /* Bordes redondeados y marco negro */
         }
 
-        /* Ocultar barras de desplazamiento nativas para un diseño más limpio */
+        /* Oculta la barrita fea de scroll del lado derecho */
         #app-container::-webkit-scrollbar { width: 4px; }
         #app-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 4px; }
 
-        /* =========================================
-           SISTEMA DE PANTALLAS (SPA - Single Page Application)
-           Maneja la visibilidad de las diferentes secciones.
-           ========================================= */
+        /* --- CLASE PARA OCULTAR O MOSTRAR PANTALLAS --- */
         .pantalla {
-            display: none; /* Oculto por defecto */
-            width: 100%; 
-            height: 100%; 
-            padding: 1.5rem;
-            animation: fadeIn 0.25s ease-in-out;
-            flex-direction: column; 
-            overflow-y: auto;
+            display: none; /* Todas las pantallas están ocultas por defecto */
+            width: 100%; height: 100%; padding: 1.5rem;
+            animation: fadeIn 0.25s ease-in-out; /* Efecto de aparición suave */
+            flex-direction: column; overflow-y: auto;
         }
-        
         .pantalla.activa { 
-            display: flex; /* Se muestra solo cuando tiene la clase 'activa' */
+            display: flex; /* Solo se muestra la que tenga la palabra "activa" */
         }
 
         @keyframes fadeIn {
@@ -85,21 +58,16 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* =========================================
-           COMPONENTES REUTILIZABLES DE INTERFAZ (UI)
-           ========================================= */
-        
-        /* Tipografía y Etiquetas */
+        /* --- ESTILOS DE LOS TEXTOS Y BOTONES --- */
         h2 { color: var(--verde-principal); margin-top: 0; font-size: 1.4rem; }
         .etiqueta-top { font-size: 0.75rem; background: var(--verde-claro); color: var(--verde-principal); padding: 4px 10px; border-radius: 12px; display: inline-block; margin-bottom: 12px; font-weight: bold;}
         
-        /* Botones */
         .btn { width: 100%; padding: 0.9rem; border-radius: 8px; border: none; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-bottom: 0.8rem; transition: all 0.2s; text-align: center;}
         .btn-primario { background-color: var(--verde-principal); color: white; }
         .btn-primario:hover { background-color: var(--verde-oscuro); }
         .btn-secundario { background-color: white; color: var(--verde-principal); border: 2px solid var(--verde-principal); }
 
-        /* Formularios y Cajas de Texto */
+        /* --- CAJAS PARA ESCRIBIR TEXTO (FORMULARIOS) --- */
         .form-group { margin-bottom: 1rem; }
         label { display: block; font-size: 0.8rem; color: var(--gris-texto); margin-bottom: 4px; font-weight: 500; }
         input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="time"], input[type="date"] {
@@ -107,37 +75,36 @@
         }
         input:focus { border-color: var(--verde-principal); background-color: white; }
 
-        /* Checkboxes y Enlaces de retroceso */
         .checkbox-group { display: flex; align-items: flex-start; margin-bottom: 8px; font-size: 0.8rem; color: var(--gris-texto); }
         .checkbox-group input { margin-right: 8px; margin-top: 2px; accent-color: var(--verde-principal); }
         .link-volver { cursor: pointer; color: var(--gris-texto); margin-bottom: 12px; font-size: 0.85rem; display: inline-block; }
 
-        /* Encabezados superiores con fondo verde */
+        /* --- CABECERAS VERDES DE ARRIBA --- */
         .header-verde-app { background-color: var(--verde-principal); color: white; margin: -1.5rem -1.5rem 1rem -1.5rem; padding: 1.5rem; border-radius: 20px 20px 0 0; }
         .header-verde-app h3 { margin: 0; font-size: 1.2rem; font-weight: 600; }
         .header-verde-app p { margin: 4px 0 0 0; font-size: 0.8rem; opacity: 0.85; }
         .ubicacion-bar { display: flex; align-items: center; gap: 4px; font-size: 0.8rem; color: #d84315; font-weight: bold; margin-bottom: 12px; }
 
-        /* Tarjetas de listado de alimentos */
+        /* --- DISEÑO DE CADA COMIDA PUBLICADA --- */
         .tarjeta-alimento { background: white; border: 1px solid #eef2ee; border-radius: 12px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
         .tarjeta-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .tarjeta-titulo { font-weight: bold; color: #333; font-size: 1rem; margin: 0; }
         .tarjeta-detalles { font-size: 0.8rem; color: var(--gris-texto); margin: 4px 0; }
         .tarjeta-btn-reservar { background: var(--verde-principal); color: white; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 8px; font-size: 0.85rem; }
 
-        /* Barra de navegación inferior (Fija) */
+        /* --- BARRA DE BOTONES ABAJO (INICIO, BUSCAR, SALIR) --- */
         .nav-bar-inferior { display: flex; justify-content: space-around; background: white; border-top: 1px solid #eee; margin: auto -1.5rem -1.5rem -1.5rem; padding: 10px 0; position: sticky; bottom: 0; }
         .nav-item { text-align: center; font-size: 0.7rem; color: var(--gris-suave); cursor: pointer; flex: 1; }
         .nav-item.activo { color: var(--verde-principal); font-weight: bold; }
 
-        /* Tarjetas de métricas (Panel Donante) */
+        /* --- CUADRITOS DE NÚMEROS DEL PANEL DONANTE --- */
         .row-metricas { display: flex; gap: 8px; margin-bottom: 15px; }
         .metrica-card { flex: 1; background: var(--verde-claro); text-align: center; padding: 10px 4px; border-radius: 8px; border: 1px solid #d0e0d0; }
         .metrica-num { font-size: 1.2rem; font-weight: bold; color: var(--verde-principal); display: block; }
         .metrica-lbl { font-size: 0.65rem; color: var(--gris-texto); }
         .form-row { display: flex; gap: 8px; }
 
-        /* Estilos específicos para la pantalla de bienvenida y logo */
+        /* --- PANTALLA PRINCIPAL (LOGO Y BOTONES) --- */
         .logo-img { width: 85px; height: 85px; object-fit: contain; border-radius: 20px; margin: 0 auto 0.8rem; display: block; }
         .header-central { text-align: center; margin-top: 0.5rem; margin-bottom: 1.5rem; }
         .header-central h1 { color: var(--verde-principal); margin: 0; font-size: 1.5rem; }
@@ -149,16 +116,8 @@
 </head>
 <body>
 
-    <!-- =========================================
-         CONTENEDOR PRINCIPAL DE LA APP
-         Aquí residen todas las pantallas del sistema.
-         ========================================= -->
     <div id="app-container">
 
-        <!-- =========================================
-             PANTALLA 1: BIENVENIDA
-             Pantalla inicial de presentación y selección de ruta.
-             ========================================= -->
         <div id="pantalla-bienvenida" class="pantalla activa">
             <div class="header-central">
                 <img src="logo.png" alt="Logo Nutre" class="logo-img">
@@ -179,10 +138,6 @@
             </div>
         </div>
 
-        <!-- =========================================
-             PANTALLA 3: REGISTRO RECEPTOR (FAMILIA)
-             Formulario de alta para usuarios que solicitan alimentos.
-             ========================================= -->
         <div id="pantalla-registro-familia" class="pantalla">
             <span class="link-volver" onclick="navegar('pantalla-bienvenida')">← Volver</span>
             <div><span class="etiqueta-top">Registro — Familia</span></div>
@@ -204,10 +159,6 @@
             <button class="btn btn-primario" style="margin-top: 10px;" onclick="irAlFeedFamilias()">Crear cuenta gratis</button>
         </div>
 
-        <!-- =========================================
-             PANTALLA 4: REGISTRO DONANTE (NEGOCIOS)
-             Formulario de alta conectado a la base de datos de Firebase.
-             ========================================= -->
         <div id="pantalla-registro-donante" class="pantalla" style="padding-top: 0;">
             <div class="header-verde-app" style="margin-bottom: 1rem;">
                 <span style="cursor:pointer; color:white; margin-bottom:10px; display:block; font-size: 0.85rem;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
@@ -217,7 +168,6 @@
             
             <div class="form-group">
                 <label>Nombre del negocio</label>
-                <!-- Identificadores (IDs) utilizados en el script JS para extraer datos -->
                 <input id="reg-don-nombre" type="text" placeholder="Ej. Panadería Don Pepe">
             </div>
             <div class="form-group">
@@ -225,7 +175,7 @@
                 <input id="reg-don-direccion" type="text" placeholder="Ej. Cercado de Lima">
             </div>
             <div class="form-group">
-                <label>Correo de contacto (Email de acceso)</label>
+                <label>Correo de contacto</label>
                 <input id="reg-don-email" type="email" placeholder="negocio@correo.com">
             </div>
             <div class="form-group">
@@ -233,14 +183,9 @@
                 <input id="reg-don-pass" type="password" placeholder="••••••••">
             </div>
             
-            <!-- Ejecuta la función de creación de usuario en Firebase -->
             <button class="btn btn-primario" onclick="registrarNegocio()">Registrar negocio</button>
         </div>
 
-        <!-- =========================================
-             PANTALLA 5: FEED PRINCIPAL (VISTA FAMILIA)
-             Lista dinámica donde se muestran las donaciones activas.
-             ========================================= -->
         <div id="pantalla-principal-receptor" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
             <div class="header-verde-app">
                 <h3>NoDesperdicies</h3>
@@ -248,7 +193,6 @@
             </div>
             <div class="ubicacion-bar">📍 Buscando cerca de ti...</div>
 
-            <!-- CONTENEDOR DINÁMICO: Aquí se inyecta el HTML generado en el script JS -->
             <div id="feed-alimentos" style="flex: 1; padding-bottom: 10px;">
                 <p style="text-align: center; color: #888; font-size: 0.9rem;">Cargando alimentos...</p>
             </div>
@@ -260,18 +204,12 @@
             </div>
         </div>
 
-        <!-- =========================================
-             PANTALLA 8: PANEL DE CONTROL DEL DONANTE
-             Muestra métricas del usuario y formulario para nuevas publicaciones.
-             ========================================= -->
         <div id="pantalla-panel-donante" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
             <div class="header-verde-app" style="margin-bottom: 1rem;">
                 <h3>Panel donante</h3>
-                <!-- Etiqueta dinámica actualizada vía JS al iniciar sesión -->
                 <p id="panel-nombre-negocio">Cargando nombre...</p>
             </div>
 
-            <!-- INDICADORES DINÁMICOS: Sus valores cambian según la BD -->
             <div class="row-metricas">
                 <div class="metrica-card">
                     <span id="panel-metrica-kg" class="metrica-num">0</span>
@@ -289,7 +227,6 @@
 
             <h4 style="margin: 5px 0 10px 0; color: var(--verde-principal);">Publicar excedente</h4>
             
-            <!-- Formulario de creación de donación -->
             <div style="flex: 1; overflow-y: auto; padding-right: 2px;">
                 <div class="form-group">
                     <label>Nombre del producto</label>
@@ -314,7 +251,6 @@
                     </div>
                 </div>
                 
-                <!-- Ejecuta la subida de datos a la colección 'alimentos' -->
                 <button class="btn btn-primario" style="background:#0d47a1; margin-top:5px;" onclick="publicarExcedente()">Publicar ahora</button>
             </div>
 
@@ -327,16 +263,13 @@
 
     </div>
 
-    <!-- =========================================
-         LÓGICA Y CONEXIÓN A BASE DE DATOS (FIREBASE SDK)
-         ========================================= -->
     <script type="module">
-        // 1. Importación de módulos específicos de Firebase (Core, Auth, Firestore)
+        // Importamos las herramientas de Google Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, doc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-        // 2. Configuración de credenciales del proyecto de Firebase
+        // Tus llaves secretas de conexión
         const firebaseConfig = {
             apiKey: "AIzaSyAx7QLpaa5LVCZgrdwwfzYyB01jCUrAhyI",
             authDomain: "nutre-abd25.firebaseapp.com",
@@ -346,48 +279,43 @@
             appId: "1:1020228962230:web:363b5462fef8232df76317"
         };
 
-        // 3. Inicialización de los servicios
+        // Encendemos la base de datos
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // 4. Variables Globales de control de sesión
-        // Almacenan la información temporal del usuario logueado en esta pestaña
+        // Espacios para recordar quién está usando la app
         window.usuarioActualUID = null;
         window.usuarioActualNombre = "";
 
-        /* =========================================
-           MÉTODOS DE LA APLICACIÓN
-           ========================================= */
-
-        // CONTROLADOR DE NAVEGACIÓN
-        // Remueve la clase 'activa' de todas las pantallas y se la asigna al ID destino
+        // FUNCIÓN 1: Cambiar de pantalla fácilmente
         window.navegar = function(idPantallaDestino) {
+            // Escondemos todas las pantallas
             const pantallas = document.querySelectorAll('.pantalla');
             pantallas.forEach(p => p.classList.remove('activa'));
+            
+            // Mostramos solo la que nos interesa y subimos al inicio
             document.getElementById(idPantallaDestino).classList.add('activa');
-            document.getElementById(idPantallaDestino).scrollTop = 0; // Reiniciar scroll
+            document.getElementById(idPantallaDestino).scrollTop = 0; 
         }
 
-        // CONTROLADOR DE REGISTRO DE USUARIO (DONANTE)
-        // Recopila datos del DOM, crea la credencial en Firebase Auth y el documento en Firestore
+        // FUNCIÓN 2: Guardar al Donante en la base de datos
         window.registrarNegocio = async function() {
             const nombre = document.getElementById('reg-don-nombre').value;
             const email = document.getElementById('reg-don-email').value;
             const pass = document.getElementById('reg-don-pass').value;
 
-            // Validación de campos vacíos
             if(!nombre || !email || !pass) {
-                return alert("Por favor, completa todos los campos requeridos.");
+                return alert("Por favor, llena todos los campos.");
             }
 
             try {
-                // Operación asíncrona: Crear cuenta en Authentication
+                // Creamos su cuenta
                 const cred = await createUserWithEmailAndPassword(auth, email, pass);
                 window.usuarioActualUID = cred.user.uid;
                 window.usuarioActualNombre = nombre;
 
-                // Operación asíncrona: Generar documento de perfil en la colección "usuarios"
+                // Creamos su perfil con sus números en cero
                 await setDoc(doc(db, "usuarios", window.usuarioActualUID), {
                     nombre: nombre,
                     rol: "donante",
@@ -396,29 +324,26 @@
                     familias: 0
                 });
 
-                // Actualización del DOM (Interfaz) para reflejar los nuevos datos
+                // Cambiamos el texto en su panel para que diga su nombre
                 document.getElementById('panel-nombre-negocio').innerText = nombre;
                 document.getElementById('panel-metrica-kg').innerText = "0";
                 document.getElementById('panel-metrica-pubs').innerText = "0";
                 document.getElementById('panel-metrica-familias').innerText = "0";
 
-                // Redirección a la pantalla del panel
                 navegar('pantalla-panel-donante');
             } catch (error) {
-                alert("Error al intentar registrar: Verifique formato de email y contraseña (mínimo 6 caracteres).");
+                alert("Error: Asegúrate que el correo esté bien escrito y la contraseña tenga 6 letras o más.");
                 console.error(error);
             }
         }
 
-        // CONTROLADOR DE INSERCIÓN DE DATOS (NUEVA PUBLICACIÓN)
-        // Guarda un nuevo documento en la colección "alimentos" y actualiza métricas del usuario
+        // FUNCIÓN 3: Subir la comida a la nube
         window.publicarExcedente = async function() {
-            // Verificación de autenticación activa
             if(!window.usuarioActualUID) {
-                return alert("Sesión no detectada. Registre una cuenta de donante para publicar.");
+                return alert("Primero debes registrarte.");
             }
 
-            // Lectura de valores del formulario
+            // Tomamos lo que escribió en las cajas
             const producto = document.getElementById('pub-nombre').value;
             const cantidad = document.getElementById('pub-cantidad').value;
             const direccion = document.getElementById('pub-direccion').value;
@@ -426,11 +351,11 @@
             const hasta = document.getElementById('pub-hasta').value;
 
             if(!producto || !cantidad || !direccion) {
-                return alert("Los detalles del producto son obligatorios.");
+                return alert("Por favor, llena los datos del producto.");
             }
 
             try {
-                // Generar nuevo registro en la colección principal
+                // Lo guardamos en Firebase
                 await addDoc(collection(db, "alimentos"), {
                     producto: producto,
                     cantidad: cantidad,
@@ -439,53 +364,52 @@
                     donanteNombre: window.usuarioActualNombre
                 });
 
-                // Conversión de tipo para lógica de métricas (extracción de número base)
+                // Calculamos cuánto sumarle a sus "kg salvados"
                 let numeroSalvado = parseFloat(cantidad) || 1;
 
-                // Actualización de registro existente usando Firebase Increment
+                // Sumamos +1 a sus publicaciones en la nube
                 await updateDoc(doc(db, "usuarios", window.usuarioActualUID), {
                     publicaciones: increment(1),
                     kgSalvados: increment(numeroSalvado)
                 });
 
-                // Actualización del estado visual en el panel sin recargar la página
+                // Mostramos el nuevo número en su pantalla
                 let pubsVisuales = parseInt(document.getElementById('panel-metrica-pubs').innerText);
                 let kgVisuales = parseInt(document.getElementById('panel-metrica-kg').innerText);
                 document.getElementById('panel-metrica-pubs').innerText = pubsVisuales + 1;
                 document.getElementById('panel-metrica-kg').innerText = kgVisuales + numeroSalvado;
 
-                // Limpieza de campos tras inserción exitosa
+                // Borramos las cajas para que pueda escribir otra vez
                 document.getElementById('pub-nombre').value = '';
                 document.getElementById('pub-cantidad').value = '';
 
-                alert('Registro de excedente completado exitosamente.');
-                irAlFeedFamilias(); // Redirección automática a la vista general
+                alert('¡Publicado con éxito!');
+                irAlFeedFamilias(); // Lo llevamos a ver cómo quedó su publicación
 
             } catch (error) {
-                alert("Fallo en la conexión. Verifique reglas de seguridad en Firestore (Modo Prueba requerido).");
+                alert("Hubo un error guardando el alimento. Revisa tu base de datos.");
                 console.error(error);
             }
         }
 
-        // CONTROLADOR DE LECTURA DE DATOS (FEED PRINCIPAL)
-        // Consulta todos los documentos en "alimentos" y renderiza HTML dinámico
+        // FUNCIÓN 4: Cargar las comidas guardadas y mostrarlas
         window.irAlFeedFamilias = async function() {
             navegar('pantalla-principal-receptor');
             const feed = document.getElementById('feed-alimentos');
-            feed.innerHTML = '<p style="text-align:center; margin-top: 20px;">Sincronizando base de datos...</p>';
+            feed.innerHTML = '<p style="text-align:center; margin-top: 20px;">Buscando alimentos...</p>';
 
             try {
-                // Lectura (GET) de toda la colección
+                // Pedimos todos los alimentos a Firebase
                 const querySnapshot = await getDocs(collection(db, "alimentos"));
                 feed.innerHTML = ''; 
 
-                // Manejo de estado vacío
+                // Si no hay ninguno, avisamos
                 if(querySnapshot.empty) {
-                    feed.innerHTML = '<p style="text-align:center; margin-top:20px; color:#666;">No existen registros de alimentos disponibles actualmente.</p>';
+                    feed.innerHTML = '<p style="text-align:center; margin-top:20px; color:#666;">No hay comida disponible ahora mismo.</p>';
                     return;
                 }
 
-                // Iteración sobre los documentos recuperados e inyección de HTML
+                // Por cada alimento que encuentre, dibujamos un cuadrito
                 querySnapshot.forEach((documento) => {
                     const data = documento.data();
                     feed.innerHTML += `
@@ -497,17 +421,14 @@
                         <div class="tarjeta-detalles">📦 ${data.cantidad} · ${data.donanteNombre}</div>
                         <div class="tarjeta-detalles">📍 ${data.direccion}</div>
                         <div class="tarjeta-detalles">🕒 Recojo: ${data.horario}</div>
-                        <button class="tarjeta-btn-reservar" onclick="alert('Módulo de reservas en desarrollo para próxima iteración.')">Reservar</button>
+                        <button class="tarjeta-btn-reservar" onclick="alert('Pronto podrás reservar esto.')">Reservar</button>
                     </div>`;
                 });
             } catch (error) {
-                feed.innerHTML = '<p style="text-align:center; color:red;">Fallo al recuperar registros de la base de datos.</p>';
+                feed.innerHTML = '<p style="text-align:center; color:red;">No se pudieron cargar los alimentos.</p>';
                 console.error(error);
             }
         }
-        
-        // Ejecución inicial automática al cargar el documento
-        window.onload = irAlFeedFamilias;
     </script>
 </body>
 </html>
