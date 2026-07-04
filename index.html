@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUTRE - Conectamos alimentos con familias</title>
+    <style>
+        /* Paleta de colores basada en tu diseño */
+        :root {
+            --verde-principal: #1b431e;
+            --verde-claro: #eaf1ea;
+            --blanco: #ffffff;
+            --gris-texto: #666666;
+            --fondo-input: #f4f7f4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0e5e0; /* Fondo oscuro para PC */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Contenedor tipo móvil: Se ve completo en celular, y centrado como una App en PC */
+        #app-container {
+            width: 100%;
+            max-width: 420px; 
+            height: 100vh;
+            max-height: 850px;
+            background-color: var(--blanco);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            overflow-y: auto;
+            position: relative;
+            padding: 2rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Clases para ocultar/mostrar las 8 pantallas */
+        .pantalla {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .pantalla.activa {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- ESTILOS: PANTALLA 1 (BIENVENIDA) --- */
+        .header-central {
+            text-align: center;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo-placeholder {
+            width: 90px;
+            height: 90px;
+            background-color: #fde0d8;
+            border-radius: 20px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #d84315;
+        }
+
+        .header-central h1 {
+            color: var(--verde-principal);
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .header-central p {
+            color: var(--gris-texto);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .caja-info {
+            background-color: var(--verde-claro);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--verde-principal);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primario {
+            background-color: var(--verde-principal);
+            color: white;
+        }
+
+        .btn-secundario {
+            background-color: white;
+            color: var(--verde-principal);
+            border: 2px solid var(--verde-principal);
+        }
+
+        .enlace-footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gris-texto);
+            margin-top: auto;
+            padding-top: 2rem;
+        }
+
+        .enlace-footer span {
+            color: var(--verde-principal);
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+
+        <div id="pantalla-bienvenida" class="pantalla activa">
+            <div class="header-central">
+                <div class="logo-placeholder">LOGO</div>
+                <h1>NUTRE</h1>
+                <p>Conectamos alimentos con familias</p>
+            </div>
+
+            <div class="caja-info">
+                Comida en buen estado que sobra,<br>para familias que la necesitan.<br>
+                <strong>Gratis. Siempre.</strong>
+            </div>
+
+            <button class="btn btn-primario" onclick="navegar('pantalla-registro-familia')">Soy una familia</button>
+            <button class="btn btn-secundario" onclick="navegar('pantalla-registro-donante')">Soy un donante</button>
+
+            <div class="enlace-footer">
+                ¿Ya tienes cuenta? <span onclick="navegar('pantalla-login')">Ingresa aquí</span>
+            </div>
+        </div>
+
+        <div id="pantalla-login" class="pantalla">
+            <h2>Iniciar sesión</h2>
+            <p>Pantalla en construcción...</p>
+            <button class="btn btn-secundario" onclick="navegar('pantalla-bienvenida')">Volver atrás</button>
+        </div>
+
+        </div>
+
+    <script>
+        // Sistema de navegación entre las 8 pantallas
+        function navegar(idPantallaDestino) {
+            // 1. Ocultamos todas las pantallas quitando la clase 'activa'
+            const pantallas = document.querySelectorAll('.pantalla');
+            pantallas.forEach(pantalla => {
+                pantalla.classList.remove('activa');
+            });
+
+            // 2. Mostramos solo la pantalla que necesitamos
+            document.getElementById(idPantallaDestino).classList.add('activa');
+        }
+    </script>
+</body>
+</html>
