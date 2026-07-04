@@ -81,7 +81,19 @@
 
         /* --- PANTALLA 1: BIENVENIDA --- */
         .header-central { text-align: center; margin-top: 1rem; margin-bottom: 2rem; }
-        .logo-placeholder { width: 90px; height: 90px; background-color: #fde0d8; border-radius: 20px; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #d84315; }
+        
+        /* AQUÍ ESTÁ EL CAMBIO DEL LOGO EN EL CSS */
+        .logo-img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 20px;
+            margin: 0 auto 1rem;
+            display: block;
+            background-color: var(--blanco);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
         .header-central h1 { color: var(--verde-principal); margin: 0; font-size: 1.5rem; }
         .header-central p { color: var(--gris-texto); font-size: 0.9rem; margin-top: 5px; }
         
@@ -106,9 +118,11 @@
 
     <div id="app-container">
 
+        <!-- PANTALLA 1: BIENVENIDA -->
         <div id="pantalla-bienvenida" class="pantalla activa">
             <div class="header-central">
-                <div class="logo-placeholder">LOGO</div>
+                <!-- AQUÍ ESTÁ EL CAMBIO DEL LOGO EN EL HTML -->
+                <img src="logo.png" alt="Logo Nutre" class="logo-img">
                 <h1>NUTRE</h1>
                 <p>Conectamos alimentos con familias</p>
             </div>
@@ -123,6 +137,7 @@
             </div>
         </div>
 
+        <!-- PANTALLA 2: INICIAR SESIÓN -->
         <div id="pantalla-login" class="pantalla">
             <span style="cursor:pointer; color:var(--gris-texto); margin-bottom:15px;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
             <h2>Iniciar sesión</h2>
@@ -149,6 +164,7 @@
             </div>
         </div>
 
+        <!-- PANTALLA 3: REGISTRO FAMILIA -->
         <div id="pantalla-registro-familia" class="pantalla">
             <span style="cursor:pointer; color:var(--gris-texto); margin-bottom:15px;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
             <div><span class="etiqueta-top">Registro — Familia</span></div>
@@ -183,6 +199,7 @@
             <button class="btn btn-primario" style="margin-top: 15px;" onclick="alert('Aquí entraremos a la App Principal en el siguiente paso')">Crear cuenta gratis</button>
         </div>
 
+        <!-- PANTALLA 4: REGISTRO DONANTE -->
         <div id="pantalla-registro-donante" class="pantalla" style="padding-top: 0;">
             <div class="header-donante">
                 <span style="cursor:pointer; color:white; margin-bottom:15px; display:block;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
