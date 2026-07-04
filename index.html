@@ -196,5 +196,302 @@
         </div>
 
         <div id="pantalla-registro-familia" class="pantalla">
-            <span class="link-volver
+            <span class="link-volver" onclick="navegar('pantalla-bienvenida')">← Volver</span>
+            <div><span class="etiqueta-top">Registro — Familia</span></div>
+            <h2>Crea tu cuenta</h2>
+            
+            <div class="form-group">
+                <label>Nombre completo</label>
+                <input type="text" placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+                <label>Correo o celular</label>
+                <input type="text" placeholder="ejemplo@correo.com">
+            </div>
+            <div class="form-group">
+                <label>Distrito</label>
+                <input type="text" placeholder="San Juan de Lurigancho">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" placeholder="••••••••">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" checked>
+                <label>Acepto los términos y condiciones</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" checked>
+                <label>Acepto el uso de mis datos para la app</label>
+            </div>
+            
+            <button class="btn btn-primario" style="margin-top: 10px;" onclick="navegar('pantalla-principal-receptor')">Crear cuenta gratis</button>
+        </div>
+
+        <div id="pantalla-registro-donante" class="pantalla" style="padding-top: 0;">
+            <div class="header-verde-app" style="margin-bottom: 1rem;">
+                <span style="cursor:pointer; color:white; margin-bottom:10px; display:block; font-size: 0.85rem;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
+                <h3>Registro donante</h3>
+                <p>Restaurante, mercado o negocio</p>
+            </div>
+            
+            <div><span class="etiqueta-top">Donante</span></div>
+            
+            <div class="form-group">
+                <label>Nombre del negocio</label>
+                <input type="text" placeholder="Panadería El Sol">
+            </div>
+            <div class="form-group">
+                <label>Tipo de negocio</label>
+                <input type="text" placeholder="Panadería">
+            </div>
+            <div class="form-group">
+                <label>Dirección</label>
+                <input type="text" placeholder="Av. Próceres 240, SJL">
+            </div>
+            <div class="form-group">
+                <label>Correo de contacto</label>
+                <input type="email" placeholder="negocio@correo.com">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" placeholder="••••••••">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" checked>
+                <label style="color: var(--verde-principal); font-weight: bold;">Me comprometo a donar en buen estado</label>
+            </div>
+            
+            <button class="btn btn-primario" onclick="navegar('pantalla-panel-donante')">Registrar negocio</button>
+        </div>
+
+        <div id="pantalla-principal-receptor" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
+            <div class="header-verde-app">
+                <h3>NoDesperdicies</h3>
+                <p>Alimentos disponibles cerca de ti</p>
+            </div>
+
+            <div class="ubicacion-bar">
+                📍 San Juan de Lurigancho
+            </div>
+
+            <div style="flex: 1;">
+                <div class="tarjeta-alimento">
+                    <div class="tarjeta-header">
+                        <h4 class="tarjeta-titulo">Pan integral del día</h4>
+                        <span class="etiqueta-top" style="margin:0;">Hoy</span>
+                    </div>
+                    <div class="tarjeta-detalles">📦 3 kg · Panadería El Sol</div>
+                    <div class="tarjeta-detalles">📍 Av. Próceres 240 - 0.4 km</div>
+                    <div class="tarjeta-detalles">🕒 Recojo: 5:00 PM - 7:00 PM</div>
+                    <button class="tarjeta-btn-reservar" onclick="navegar('pantalla-confirmar-reojo')">Reservar</button>
+                </div>
+
+                <div class="tarjeta-alimento">
+                    <div class="tarjeta-header">
+                        <h4 class="tarjeta-titulo">Verduras frescas</h4>
+                        <span class="etiqueta-top" style="margin:0; background: #fff3cd; color: #856404;">Vence hoy</span>
+                    </div>
+                    <div class="tarjeta-detalles">📦 5 kg · Mercado Zárate</div>
+                    <div class="tarjeta-detalles">📍 Jr. Los Andes 12 - 1.1 km</div>
+                    <div class="tarjeta-detalles">🕒 Recojo: 3:00 PM - 5:00 PM</div>
+                    <button class="tarjeta-btn-reservar" onclick="navegar('pantalla-confirmar-reojo')">Reservar</button>
+                </div>
+
+                <div class="tarjeta-alimento">
+                    <div class="tarjeta-header">
+                        <h4 class="tarjeta-titulo">Arroz con leche</h4>
+                        <span class="etiqueta-top" style="margin:0; background: #e0f2f1; color: #004d40;">8 porciones</span>
+                    </div>
+                    <div class="tarjeta-detalles">📦 Rest. La Familia - Gratis</div>
+                    <div class="tarjeta-detalles">📍 Calle Lima 88 - 0.8 km</div>
+                    <div class="tarjeta-detalles">🕒 Recojo: 6:00 PM - 8:00 PM</div>
+                    <button class="tarjeta-btn-reservar" onclick="navegar('pantalla-confirmar-reojo')">Reservar</button>
+                </div>
+            </div>
+
+            <div class="nav-bar-inferior">
+                <div class="nav-item activo">🏠<br>Inicio</div>
+                <div class="nav-item">🔍<br>Buscar</div>
+                <div class="nav-item" onclick="navegar('pantalla-reserva-confirmada')">📅<br>Mis reservas</div>
+                <div class="nav-item" onclick="navegar('pantalla-bienvenida')">👤<br>Perfil</div>
+            </div>
+        </div>
+
+        <div id="pantalla-confirmar-reojo" class="pantalla" style="padding-top:0;">
+            <div class="header-verde-app" style="margin-bottom: 1rem;">
+                <span style="cursor:pointer; color:white; margin-bottom:5px; display:block; font-size:0.85rem;" onclick="navegar('pantalla-principal-receptor')">← Volver</span>
+                <h3>Confirmar recojo</h3>
+                <p>Elige fecha y hora</p>
+            </div>
+
+            <h4 style="margin: 0 0 5px 0; color:#333;">Pan integral del día</h4>
+            <p style="margin: 0 0 15px 0; font-size:0.8rem; color:var(--gris-texto);">Panadería El Sol · Av. Próceres 240</p>
+
+            <div class="form-group">
+                <label>Fecha de recojo</label>
+                <input type="date" value="2026-07-04">
+            </div>
+
+            <label>Hora disponible</label>
+            <div class="grid-horas">
+                <div class="hora-box seleccionada">5:00 PM</div>
+                <div class="hora-box">5:30 PM</div>
+                <div class="hora-box">6:00 PM</div>
+                <div class="hora-box">6:30 PM</div>
+                <div class="hora-box">7:00 PM</div>
+                <div class="hora-box">7:30 PM</div>
+            </div>
+
+            <label>Lugar de recojo</label>
+            <p style="margin: 0 0 15px 0; font-size: 0.85rem; font-weight: bold; color: var(--verde-principal);">📍 Av. Próceres 240, ingreso lateral</p>
+
+            <label>Nota del donante</label>
+            <div class="nota-donante">
+                "Tocar el timbre y preguntar por Señora Rosa"
+            </div>
+
+            <button class="btn btn-primario" style="margin-top:auto;" onclick="navegar('pantalla-reserva-confirmada')">Confirmar reserva</button>
+        </div>
+
+        <div id="pantalla-reserva-confirmada" class="pantalla">
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <img src="logo.png" alt="Logo" style="width: 60px; margin: 0 auto;">
+                <h2 style="margin: 10px 0 2px 0;">¡Reserva confirmada!</h2>
+                <p style="margin:0; font-size:0.85rem; color:var(--gris-texto);">Muestra este código al llegar</p>
+            </div>
+
+            <div class="reserva-box-datos">
+                <div class="reserva-fila"><strong>Producto</strong> <span>Pan integral 3 kg</span></div>
+                <div class="reserva-fila"><strong>Lugar</strong> <span>Av. Próceres 240</span></div>
+                <div class="reserva-fila"><strong>Fecha</strong> <span>Hoy</span></div>
+                <div class="reserva-fila"><strong>Hora</strong> <span>5:00 PM</span></div>
+                <div class="reserva-fila"><strong>Estado</strong> <span style="color:green; font-weight:bold;">✓ Activa</span></div>
+            </div>
+
+            <div class="qr-placeholder">📦 [ CÓDIGO QR ]</div>
+            <div style="text-align: center; font-weight: bold; font-size: 1rem; color: #333; margin-bottom: 15px;">Código #NDV-0042</div>
+
+            <div class="caja-advertencia">
+                ⚠️ Si no puedes ir, cancela antes de las 4:00 PM para liberar el lugar a otra familia.
+            </div>
+
+            <button class="btn btn-primario" style="margin-top: auto;" onclick="navegar('pantalla-principal-receptor')">Volver al inicio</button>
+        </div>
+
+        <div id="pantalla-panel-donante" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
+            <div class="header-verde-app" style="margin-bottom: 1rem;">
+                <h3>Panel donante</h3>
+                <p>Panadería El Sol</p>
+            </div>
+
+            <div class="row-metricas">
+                <div class="metrica-card"><span class="metrica-num">38</span><span class="metrica-lbl">kg salvados</span></div>
+                <div class="metrica-card"><span class="metrica-num">12</span><span class="metrica-lbl">familias</span></div>
+                <div class="metrica-card"><span class="metrica-num">5</span><span class="metrica-lbl">publicaciones</span></div>
+            </div>
+
+            <h4 style="margin: 5px 0 10px 0; color: var(--verde-principal);">Publicar excedente</h4>
+            
+            <div style="flex: 1; overflow-y: auto; padding-right: 2px;">
+                <div class="form-group">
+                    <label>Nombre del producto</label>
+                    <input type="text" placeholder="Ej. Baguettes de ayer">
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex:1;">
+                        <label>Cantidad</label>
+                        <input type="text" placeholder="Ej. 3 kg">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label>Categoría</label>
+                        <input type="text" placeholder="Panadería">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Fecha de vencimiento</label>
+                    <input type="date">
+                </div>
+                <div class="form-group">
+                    <label>Dirección de recojo</label>
+                    <input type="text" placeholder="Av. Próceres 240">
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex:1;">
+                        <label>Desde</label>
+                        <input type="time" value="17:00">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label>Hasta</label>
+                        <input type="time" value="19:00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Nota para el receptor (opcional)</label>
+                    <input type="text" placeholder="Tocar timbre...">
+                </div>
                 
+                <button class="btn btn-primario" style="background:#0d47a1; margin-top:5px;" onclick="alert('¡Excedente publicado exitosamente en el sistema!'); navegar('pantalla-principal-receptor')">Publicar ahora</button>
+            </div>
+
+            <div class="nav-bar-inferior">
+                <div class="nav-item activo">📊<br>Mi Panel</div>
+                <div class="nav-item" onclick="navegar('pantalla-principal-receptor')">👁️<br>Ver modo familia</div>
+                <div class="nav-item" onclick="navegar('pantalla-bienvenida')">🚪<br>Salir</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAx7QLpaa5LVCZgrdwwfzYyB01jCUrAhyI",
+            authDomain: "nutre-abd25.firebaseapp.com",
+            projectId: "nutre-abd25",
+            storageBucket: "nutre-abd25.firebasestorage.app",
+            messagingSenderId: "1020228962230",
+            appId: "1:1020228962230:web:363b5462fef8232df76317"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        console.log("¡Nutre conectado a Firebase v12.15.0!");
+
+        // Variable global interna para saber el rol elegido en Login
+        let tipoUsuarioActual = 'familia'; 
+        window.setLoginTipo = function(tipo) {
+            tipoUsuarioActual = tipo;
+            document.getElementById('login-tab-familia').classList.toggle('activo', tipo === 'familia');
+            document.getElementById('login-tab-donante').classList.toggle('activo', tipo === 'donante');
+        }
+
+        window.ejecutarLogin = function() {
+            if(tipoUsuarioActual === 'familia') {
+                navegar('pantalla-principal-receptor');
+            } else {
+                navegar('pantalla-panel-donante');
+            }
+        }
+
+        // Sistema central de Navegación SPA
+        window.navegar = function(idPantallaDestino) {
+            const pantallas = document.querySelectorAll('.pantalla');
+            pantallas.forEach(pantalla => {
+                pantalla.classList.remove('activa');
+            });
+            document.getElementById(idPantallaDestino).classList.add('activa');
+            
+            // Auto-scroll al inicio de la pantalla cargada
+            document.getElementById(idPantallaDestino).scrollTop = 0;
+        }
+    </script>
+</body>
+</html>
