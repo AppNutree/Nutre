@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NUTRE - Conectamos alimentos con familias</title>
     <style>
-        /* Paleta de colores basada en tu diseño */
         :root {
             --verde-principal: #1b431e;
             --verde-claro: #eaf1ea;
@@ -18,37 +17,40 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #e0e5e0; /* Fondo oscuro para PC */
+            background-color: #7b947e; /* Fondo verde acorde a tus capturas */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
-        /* Contenedor tipo móvil: Se ve completo en celular, y centrado como una App en PC */
         #app-container {
             width: 100%;
-            max-width: 420px; 
+            max-width: 400px; 
             height: 100vh;
-            max-height: 850px;
+            max-height: 800px;
             background-color: var(--blanco);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
             overflow-y: auto;
             position: relative;
-            padding: 2rem;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
+            border-radius: 30px; /* Bordes redondeados simulando celular */
+            border: 8px solid #333; /* Marco de celular */
         }
 
-        /* Clases para ocultar/mostrar las 8 pantallas */
         .pantalla {
             display: none;
             width: 100%;
+            height: 100%;
+            padding: 2rem;
+            box-sizing: border-box;
             animation: fadeIn 0.3s ease-in-out;
+            flex-direction: column;
         }
         .pantalla.activa {
-            display: block;
+            display: flex;
         }
 
         @keyframes fadeIn {
@@ -56,86 +58,48 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- ESTILOS: PANTALLA 1 (BIENVENIDA) --- */
-        .header-central {
-            text-align: center;
-            margin-top: 1rem;
-            margin-bottom: 2rem;
+        /* --- ESTILOS GENERALES Y BOTONES --- */
+        h2 { color: var(--verde-principal); margin-top: 0; }
+        .etiqueta-top { font-size: 0.8rem; background: var(--verde-claro); color: var(--verde-principal); padding: 4px 10px; border-radius: 12px; display: inline-block; margin-bottom: 10px; font-weight: bold;}
+        
+        .btn { width: 100%; padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; font-weight: 600; cursor: pointer; margin-bottom: 1rem; transition: all 0.2s; }
+        .btn-primario { background-color: var(--verde-principal); color: white; }
+        .btn-secundario { background-color: white; color: var(--verde-principal); border: 2px solid var(--verde-principal); }
+
+        /* --- FORMULARIOS --- */
+        .form-group { margin-bottom: 1.2rem; }
+        label { display: block; font-size: 0.85rem; color: var(--gris-texto); margin-bottom: 5px; }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%; padding: 12px; border: none; background-color: var(--fondo-input); border-radius: 8px; box-sizing: border-box; font-size: 0.95rem; outline: none;
+        }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+            border: 1px solid var(--verde-principal);
         }
 
-        .logo-placeholder {
-            width: 90px;
-            height: 90px;
-            background-color: #fde0d8;
-            border-radius: 20px;
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #d84315;
-        }
+        .checkbox-group { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 0.85rem; color: var(--gris-texto); }
+        .checkbox-group input { margin-right: 10px; margin-top: 3px; accent-color: var(--verde-principal); }
 
-        .header-central h1 {
-            color: var(--verde-principal);
-            margin: 0;
-            font-size: 1.5rem;
-        }
+        /* --- PANTALLA 1: BIENVENIDA --- */
+        .header-central { text-align: center; margin-top: 1rem; margin-bottom: 2rem; }
+        .logo-placeholder { width: 90px; height: 90px; background-color: #fde0d8; border-radius: 20px; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #d84315; }
+        .header-central h1 { color: var(--verde-principal); margin: 0; font-size: 1.5rem; }
+        .header-central p { color: var(--gris-texto); font-size: 0.9rem; margin-top: 5px; }
+        
+        .caja-info { background-color: var(--verde-claro); padding: 1.5rem; border-radius: 12px; text-align: center; margin-bottom: 2.5rem; color: var(--verde-principal); font-size: 0.95rem; line-height: 1.5; }
+        .enlace-footer { text-align: center; font-size: 0.9rem; color: var(--gris-texto); margin-top: auto; padding-top: 1rem; }
+        .enlace-footer span { color: var(--verde-principal); font-weight: bold; cursor: pointer; text-decoration: underline; }
 
-        .header-central p {
-            color: var(--gris-texto);
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
+        /* --- PANTALLA 2: LOGIN --- */
+        .toggle-container { display: flex; gap: 10px; margin-bottom: 20px; }
+        .toggle-btn { flex: 1; padding: 10px; border: 1px solid #ccc; background: white; border-radius: 8px; cursor: pointer; color: var(--gris-texto); }
+        .toggle-btn.activo { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
+        .olvide-pass { text-align: right; font-size: 0.8rem; color: var(--verde-principal); cursor: pointer; margin-top: -10px; margin-bottom: 20px; display: block; }
 
-        .caja-info {
-            background-color: var(--verde-claro);
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 2.5rem;
-            color: var(--verde-principal);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
+        /* --- PANTALLA 4: HEADER DONANTE --- */
+        .header-donante { background-color: var(--verde-principal); color: white; margin: -2rem -2rem 1.5rem -2rem; padding: 2rem; border-radius: 30px 30px 0 0; }
+        .header-donante h2 { color: white; margin: 0 0 5px 0; }
+        .header-donante p { margin: 0; font-size: 0.85rem; opacity: 0.9; }
 
-        .btn {
-            width: 100%;
-            padding: 1rem;
-            border-radius: 8px;
-            border: none;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 1rem;
-            transition: all 0.2s;
-        }
-
-        .btn-primario {
-            background-color: var(--verde-principal);
-            color: white;
-        }
-
-        .btn-secundario {
-            background-color: white;
-            color: var(--verde-principal);
-            border: 2px solid var(--verde-principal);
-        }
-
-        .enlace-footer {
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--gris-texto);
-            margin-top: auto;
-            padding-top: 2rem;
-        }
-
-        .enlace-footer span {
-            color: var(--verde-principal);
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
@@ -148,38 +112,123 @@
                 <h1>NUTRE</h1>
                 <p>Conectamos alimentos con familias</p>
             </div>
-
             <div class="caja-info">
                 Comida en buen estado que sobra,<br>para familias que la necesitan.<br>
                 <strong>Gratis. Siempre.</strong>
             </div>
-
             <button class="btn btn-primario" onclick="navegar('pantalla-registro-familia')">Soy una familia</button>
             <button class="btn btn-secundario" onclick="navegar('pantalla-registro-donante')">Soy un donante</button>
-
             <div class="enlace-footer">
                 ¿Ya tienes cuenta? <span onclick="navegar('pantalla-login')">Ingresa aquí</span>
             </div>
         </div>
 
         <div id="pantalla-login" class="pantalla">
+            <span style="cursor:pointer; color:var(--gris-texto); margin-bottom:15px;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
             <h2>Iniciar sesión</h2>
-            <p>Pantalla en construcción...</p>
-            <button class="btn btn-secundario" onclick="navegar('pantalla-bienvenida')">Volver atrás</button>
+            <label>¿Quién eres?</label>
+            <div class="toggle-container">
+                <button class="toggle-btn activo">Familia</button>
+                <button class="toggle-btn" onclick="navegar('pantalla-registro-donante')">Donante</button>
+            </div>
+            
+            <div class="form-group">
+                <label>Correo o celular</label>
+                <input type="email" placeholder="ejemplo@correo.com">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" placeholder="••••••••">
+            </div>
+            <span class="olvide-pass">¿Olvidaste tu contraseña?</span>
+            
+            <button class="btn btn-primario" onclick="alert('Aquí entraremos a la App Principal en el siguiente paso')">Ingresar</button>
+            
+            <div class="enlace-footer">
+                ¿No tienes cuenta? <span onclick="navegar('pantalla-registro-familia')">Regístrate gratis</span>
+            </div>
         </div>
 
+        <div id="pantalla-registro-familia" class="pantalla">
+            <span style="cursor:pointer; color:var(--gris-texto); margin-bottom:15px;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
+            <div><span class="etiqueta-top">Registro — Familia</span></div>
+            <h2>Crea tu cuenta</h2>
+            
+            <div class="form-group">
+                <label>Nombre completo</label>
+                <input type="text" placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+                <label>Correo o celular</label>
+                <input type="text" placeholder="ejemplo@correo.com">
+            </div>
+            <div class="form-group">
+                <label>Distrito</label>
+                <input type="text" placeholder="San Juan de Lurigancho">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" placeholder="••••••••">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" checked>
+                <label>Acepto los términos y condiciones</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" checked>
+                <label>Acepto el uso de mis datos para la app</label>
+            </div>
+            
+            <button class="btn btn-primario" style="margin-top: 15px;" onclick="alert('Aquí entraremos a la App Principal en el siguiente paso')">Crear cuenta gratis</button>
         </div>
+
+        <div id="pantalla-registro-donante" class="pantalla" style="padding-top: 0;">
+            <div class="header-donante">
+                <span style="cursor:pointer; color:white; margin-bottom:15px; display:block;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
+                <h2>Registro donante</h2>
+                <p>Restaurante, mercado o negocio</p>
+            </div>
+            
+            <div><span class="etiqueta-top">Donante</span></div>
+            
+            <div class="form-group">
+                <label>Nombre del negocio</label>
+                <input type="text" placeholder="Panadería El Sol">
+            </div>
+            <div class="form-group">
+                <label>Tipo de negocio</label>
+                <input type="text" placeholder="Panadería">
+            </div>
+            <div class="form-group">
+                <label>Dirección</label>
+                <input type="text" placeholder="Av. Próceres 240, SJL">
+            </div>
+            <div class="form-group">
+                <label>Correo de contacto</label>
+                <input type="email" placeholder="negocio@correo.com">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" placeholder="••••••••">
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" checked>
+                <label style="color: var(--verde-principal); font-weight: bold;">Me comprometo a donar en buen estado</label>
+            </div>
+            
+            <button class="btn btn-primario" style="margin-top: 10px;" onclick="alert('Aquí entraremos al Panel de Donante en el siguiente paso')">Registrar negocio</button>
+        </div>
+
+    </div>
 
     <script>
-        // Sistema de navegación entre las 8 pantallas
         function navegar(idPantallaDestino) {
-            // 1. Ocultamos todas las pantallas quitando la clase 'activa'
             const pantallas = document.querySelectorAll('.pantalla');
             pantallas.forEach(pantalla => {
                 pantalla.classList.remove('activa');
             });
-
-            // 2. Mostramos solo la pantalla que necesitamos
             document.getElementById(idPantallaDestino).classList.add('activa');
         }
     </script>
