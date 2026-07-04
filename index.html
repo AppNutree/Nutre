@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NUTRE - Conectamos alimentos con familias</title>
     <style>
+        /* =========================================
+           VARIABLES GLOBALES DE DISEÑO (COLORES)
+           ========================================= */
         :root {
             --verde-principal: #1b431e;
             --verde-oscuro: #112b13;
@@ -17,58 +20,64 @@
             --naranja-texto: #856404;
         }
 
-        *, *::before, *::after {
-            box-sizing: border-box;
+        /* =========================================
+           RESET Y ESTILOS BASE
+           ========================================= */
+        *, *::before, *::after { 
+            box-sizing: border-box; 
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
+            margin: 0; 
             padding: 0;
-            background-color: #7b947e; /* Fondo verde de tus capturas */
-            display: flex;
-            justify-content: center;
+            background-color: #7b947e; /* Color de fondo general fuera de la app */
+            display: flex; 
+            justify-content: center; 
             align-items: center;
             min-height: 100vh;
         }
 
-        /* Contenedor tipo celular para PC, adaptable en móviles */
+        /* =========================================
+           CONTENEDOR PRINCIPAL (ESTRUCTURA MÓVIL)
+           Sirve para delimitar el área visible de la app, 
+           simulando la pantalla de un dispositivo móvil.
+           ========================================= */
         #app-container {
-            width: 100%;
+            width: 100%; 
             max-width: 410px; 
-            height: 100vh;
+            height: 100vh; 
             max-height: 840px;
             background-color: #fcfdfc;
             box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-            overflow-y: auto;
+            overflow-y: auto; 
             position: relative;
-            display: flex;
+            display: flex; 
             flex-direction: column;
-            border-radius: 30px;
+            border-radius: 30px; 
             border: 8px solid #222;
         }
 
-        /* Quitar barras de scroll molestas en el contenedor principal */
-        #app-container::-webkit-scrollbar {
-            width: 4px;
-        }
-        #app-container::-webkit-scrollbar-thumb {
-            background: rgba(0,0,0,0.1);
-            border-radius: 4px;
-        }
+        /* Ocultar barras de desplazamiento nativas para un diseño más limpio */
+        #app-container::-webkit-scrollbar { width: 4px; }
+        #app-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 4px; }
 
-        /* Control de Pantallas */
+        /* =========================================
+           SISTEMA DE PANTALLAS (SPA - Single Page Application)
+           Maneja la visibilidad de las diferentes secciones.
+           ========================================= */
         .pantalla {
-            display: none;
-            width: 100%;
-            height: 100%;
+            display: none; /* Oculto por defecto */
+            width: 100%; 
+            height: 100%; 
             padding: 1.5rem;
             animation: fadeIn 0.25s ease-in-out;
-            flex-direction: column;
+            flex-direction: column; 
             overflow-y: auto;
         }
-        .pantalla.activa {
-            display: flex;
+        
+        .pantalla.activa { 
+            display: flex; /* Se muestra solo cuando tiene la clase 'activa' */
         }
 
         @keyframes fadeIn {
@@ -76,15 +85,21 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- COMPONENTES COMUNES --- */
+        /* =========================================
+           COMPONENTES REUTILIZABLES DE INTERFAZ (UI)
+           ========================================= */
+        
+        /* Tipografía y Etiquetas */
         h2 { color: var(--verde-principal); margin-top: 0; font-size: 1.4rem; }
         .etiqueta-top { font-size: 0.75rem; background: var(--verde-claro); color: var(--verde-principal); padding: 4px 10px; border-radius: 12px; display: inline-block; margin-bottom: 12px; font-weight: bold;}
         
+        /* Botones */
         .btn { width: 100%; padding: 0.9rem; border-radius: 8px; border: none; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-bottom: 0.8rem; transition: all 0.2s; text-align: center;}
         .btn-primario { background-color: var(--verde-principal); color: white; }
         .btn-primario:hover { background-color: var(--verde-oscuro); }
         .btn-secundario { background-color: white; color: var(--verde-principal); border: 2px solid var(--verde-principal); }
 
+        /* Formularios y Cajas de Texto */
         .form-group { margin-bottom: 1rem; }
         label { display: block; font-size: 0.8rem; color: var(--gris-texto); margin-bottom: 4px; font-weight: 500; }
         input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="time"], input[type="date"] {
@@ -92,49 +107,37 @@
         }
         input:focus { border-color: var(--verde-principal); background-color: white; }
 
+        /* Checkboxes y Enlaces de retroceso */
         .checkbox-group { display: flex; align-items: flex-start; margin-bottom: 8px; font-size: 0.8rem; color: var(--gris-texto); }
         .checkbox-group input { margin-right: 8px; margin-top: 2px; accent-color: var(--verde-principal); }
-
         .link-volver { cursor: pointer; color: var(--gris-texto); margin-bottom: 12px; font-size: 0.85rem; display: inline-block; }
 
-        /* --- HEADERS SUPERIORES --- */
+        /* Encabezados superiores con fondo verde */
         .header-verde-app { background-color: var(--verde-principal); color: white; margin: -1.5rem -1.5rem 1rem -1.5rem; padding: 1.5rem; border-radius: 20px 20px 0 0; }
         .header-verde-app h3 { margin: 0; font-size: 1.2rem; font-weight: 600; }
         .header-verde-app p { margin: 4px 0 0 0; font-size: 0.8rem; opacity: 0.85; }
         .ubicacion-bar { display: flex; align-items: center; gap: 4px; font-size: 0.8rem; color: #d84315; font-weight: bold; margin-bottom: 12px; }
 
-        /* --- TARJETAS DE ALIMENTOS (PANTALLA 5) --- */
-        .tarjeta-alimento { background: white; border: 1px solid #eef2ee; border-radius: 12px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        /* Tarjetas de listado de alimentos */
+        .tarjeta-alimento { background: white; border: 1px solid #eef2ee; border-radius: 12px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
         .tarjeta-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .tarjeta-titulo { font-weight: bold; color: #333; font-size: 1rem; margin: 0; }
         .tarjeta-detalles { font-size: 0.8rem; color: var(--gris-texto); margin: 4px 0; }
         .tarjeta-btn-reservar { background: var(--verde-principal); color: white; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 8px; font-size: 0.85rem; }
 
-        /* --- NAV BAR INFERIOR --- */
+        /* Barra de navegación inferior (Fija) */
         .nav-bar-inferior { display: flex; justify-content: space-around; background: white; border-top: 1px solid #eee; margin: auto -1.5rem -1.5rem -1.5rem; padding: 10px 0; position: sticky; bottom: 0; }
         .nav-item { text-align: center; font-size: 0.7rem; color: var(--gris-suave); cursor: pointer; flex: 1; }
         .nav-item.activo { color: var(--verde-principal); font-weight: bold; }
 
-        /* --- RECOJO Y HORAS (PANTALLA 6) --- */
-        .grid-horas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0 15px 0; }
-        .hora-box { border: 1px solid #ddd; padding: 10px; text-align: center; border-radius: 6px; font-size: 0.8rem; cursor: pointer; background: white; font-weight: 500; }
-        .hora-box.seleccionada { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
-        .nota-donante { background: #fffde7; border-left: 4px solid #fdd835; padding: 10px; font-size: 0.8rem; border-radius: 4px; margin-bottom: 15px; font-style: italic; color: #555; }
-
-        /* --- RESERVA CONFIRMADA (PANTALLA 7) --- */
-        .reserva-box-datos { background: var(--verde-claro); padding: 12px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 15px; }
-        .reserva-fila { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed rgba(0,0,0,0.05); }
-        .qr-placeholder { width: 100px; height: 100px; background: var(--verde-principal); margin: 15px auto; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; }
-        .caja-advertencia { background: var(--naranja-alerta); color: var(--naranja-texto); padding: 10px; border-radius: 8px; font-size: 0.75rem; line-height: 1.4; text-align: center; margin-bottom: 15px; }
-
-        /* --- PANEL DONANTE (PANTALLA 8) --- */
+        /* Tarjetas de métricas (Panel Donante) */
         .row-metricas { display: flex; gap: 8px; margin-bottom: 15px; }
         .metrica-card { flex: 1; background: var(--verde-claro); text-align: center; padding: 10px 4px; border-radius: 8px; border: 1px solid #d0e0d0; }
         .metrica-num { font-size: 1.2rem; font-weight: bold; color: var(--verde-principal); display: block; }
         .metrica-lbl { font-size: 0.65rem; color: var(--gris-texto); }
         .form-row { display: flex; gap: 8px; }
 
-        /* Estilos específicos para pantallas */
+        /* Estilos específicos para la pantalla de bienvenida y logo */
         .logo-img { width: 85px; height: 85px; object-fit: contain; border-radius: 20px; margin: 0 auto 0.8rem; display: block; }
         .header-central { text-align: center; margin-top: 0.5rem; margin-bottom: 1.5rem; }
         .header-central h1 { color: var(--verde-principal); margin: 0; font-size: 1.5rem; }
@@ -142,59 +145,44 @@
         .caja-info { background-color: var(--verde-claro); padding: 1.2rem; border-radius: 12px; text-align: center; margin-bottom: 2rem; color: var(--verde-principal); font-size: 0.9rem; line-height: 1.4; }
         .enlace-footer { text-align: center; font-size: 0.85rem; color: var(--gris-texto); margin-top: auto; padding-top: 1rem; }
         .enlace-footer span { color: var(--verde-principal); font-weight: bold; cursor: pointer; text-decoration: underline; }
-        .toggle-container { display: flex; gap: 8px; margin-bottom: 15px; }
-        .toggle-btn { flex: 1; padding: 9px; border: 1px solid #ccc; background: white; border-radius: 8px; cursor: pointer; color: var(--gris-texto); font-size: 0.85rem;}
-        .toggle-btn.activo { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
-        .olvide-pass { text-align: right; font-size: 0.75rem; color: var(--verde-principal); cursor: pointer; margin-top: -6px; margin-bottom: 15px; display: block; }
     </style>
 </head>
 <body>
 
+    <!-- =========================================
+         CONTENEDOR PRINCIPAL DE LA APP
+         Aquí residen todas las pantallas del sistema.
+         ========================================= -->
     <div id="app-container">
 
+        <!-- =========================================
+             PANTALLA 1: BIENVENIDA
+             Pantalla inicial de presentación y selección de ruta.
+             ========================================= -->
         <div id="pantalla-bienvenida" class="pantalla activa">
             <div class="header-central">
                 <img src="logo.png" alt="Logo Nutre" class="logo-img">
                 <h1>NUTRE</h1>
                 <p>Conectamos alimentos con familias</p>
             </div>
+            
             <div class="caja-info">
                 Comida en buen estado que sobra,<br>para familias que la necesitan.<br>
                 <strong>Gratis. Siempre.</strong>
             </div>
+            
             <button class="btn btn-primario" onclick="navegar('pantalla-registro-familia')">Soy una familia</button>
             <button class="btn btn-secundario" onclick="navegar('pantalla-registro-donante')">Soy un donante</button>
+            
             <div class="enlace-footer">
                 ¿Ya tienes cuenta? <span onclick="navegar('pantalla-login')">Ingresa aquí</span>
             </div>
         </div>
 
-        <div id="pantalla-login" class="pantalla">
-            <span class="link-volver" onclick="navegar('pantalla-bienvenida')">← Volver</span>
-            <h2>Iniciar sesión</h2>
-            <label>¿Quién eres?</label>
-            <div class="toggle-container">
-                <button id="login-tab-familia" class="toggle-btn activo" onclick="setLoginTipo('familia')">Familia</button>
-                <button id="login-tab-donante" class="toggle-btn" onclick="setLoginTipo('donante')">Donante</button>
-            </div>
-            
-            <div class="form-group">
-                <label>Correo o celular</label>
-                <input type="email" placeholder="ejemplo@correo.com">
-            </div>
-            <div class="form-group">
-                <label>Contraseña</label>
-                <input type="password" placeholder="••••••••">
-            </div>
-            <span class="olvide-pass">¿Olvidaste tu contraseña?</span>
-            
-            <button class="btn btn-primario" onclick="ejecutarLogin()">Ingresar</button>
-            
-            <div class="enlace-footer">
-                ¿No tienes cuenta? <span onclick="navegar('pantalla-registro-familia')">Regístrate gratis</span>
-            </div>
-        </div>
-
+        <!-- =========================================
+             PANTALLA 3: REGISTRO RECEPTOR (FAMILIA)
+             Formulario de alta para usuarios que solicitan alimentos.
+             ========================================= -->
         <div id="pantalla-registro-familia" class="pantalla">
             <span class="link-volver" onclick="navegar('pantalla-bienvenida')">← Volver</span>
             <div><span class="etiqueta-top">Registro — Familia</span></div>
@@ -205,30 +193,21 @@
                 <input type="text" placeholder="Tu nombre">
             </div>
             <div class="form-group">
-                <label>Correo o celular</label>
-                <input type="text" placeholder="ejemplo@correo.com">
-            </div>
-            <div class="form-group">
-                <label>Distrito</label>
-                <input type="text" placeholder="San Juan de Lurigancho">
+                <label>Correo electrónico</label>
+                <input type="email" placeholder="ejemplo@correo.com">
             </div>
             <div class="form-group">
                 <label>Contraseña</label>
                 <input type="password" placeholder="••••••••">
             </div>
             
-            <div class="checkbox-group">
-                <input type="checkbox" checked>
-                <label>Acepto los términos y condiciones</label>
-            </div>
-            <div class="checkbox-group">
-                <input type="checkbox" checked>
-                <label>Acepto el uso de mis datos para la app</label>
-            </div>
-            
-            <button class="btn btn-primario" style="margin-top: 10px;" onclick="navegar('pantalla-principal-receptor')">Crear cuenta gratis</button>
+            <button class="btn btn-primario" style="margin-top: 10px;" onclick="irAlFeedFamilias()">Crear cuenta gratis</button>
         </div>
 
+        <!-- =========================================
+             PANTALLA 4: REGISTRO DONANTE (NEGOCIOS)
+             Formulario de alta conectado a la base de datos de Firebase.
+             ========================================= -->
         <div id="pantalla-registro-donante" class="pantalla" style="padding-top: 0;">
             <div class="header-verde-app" style="margin-bottom: 1rem;">
                 <span style="cursor:pointer; color:white; margin-bottom:10px; display:block; font-size: 0.85rem;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
@@ -236,220 +215,128 @@
                 <p>Restaurante, mercado o negocio</p>
             </div>
             
-            <div><span class="etiqueta-top">Donante</span></div>
-            
             <div class="form-group">
                 <label>Nombre del negocio</label>
-                <input type="text" placeholder="Panadería El Sol">
+                <!-- Identificadores (IDs) utilizados en el script JS para extraer datos -->
+                <input id="reg-don-nombre" type="text" placeholder="Ej. Panadería Don Pepe">
             </div>
             <div class="form-group">
-                <label>Tipo de negocio</label>
-                <input type="text" placeholder="Panadería">
+                <label>Dirección física</label>
+                <input id="reg-don-direccion" type="text" placeholder="Ej. Cercado de Lima">
             </div>
             <div class="form-group">
-                <label>Dirección</label>
-                <input type="text" placeholder="Av. Próceres 240, SJL">
+                <label>Correo de contacto (Email de acceso)</label>
+                <input id="reg-don-email" type="email" placeholder="negocio@correo.com">
             </div>
             <div class="form-group">
-                <label>Correo de contacto</label>
-                <input type="email" placeholder="negocio@correo.com">
-            </div>
-            <div class="form-group">
-                <label>Contraseña</label>
-                <input type="password" placeholder="••••••••">
+                <label>Contraseña (Mínimo 6 caracteres)</label>
+                <input id="reg-don-pass" type="password" placeholder="••••••••">
             </div>
             
-            <div class="checkbox-group">
-                <input type="checkbox" checked>
-                <label style="color: var(--verde-principal); font-weight: bold;">Me comprometo a donar en buen estado</label>
-            </div>
-            
-            <button class="btn btn-primario" onclick="navegar('pantalla-panel-donante')">Registrar negocio</button>
+            <!-- Ejecuta la función de creación de usuario en Firebase -->
+            <button class="btn btn-primario" onclick="registrarNegocio()">Registrar negocio</button>
         </div>
 
+        <!-- =========================================
+             PANTALLA 5: FEED PRINCIPAL (VISTA FAMILIA)
+             Lista dinámica donde se muestran las donaciones activas.
+             ========================================= -->
         <div id="pantalla-principal-receptor" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
             <div class="header-verde-app">
                 <h3>NoDesperdicies</h3>
                 <p>Alimentos disponibles cerca de ti</p>
             </div>
+            <div class="ubicacion-bar">📍 Buscando cerca de ti...</div>
 
-            <div class="ubicacion-bar">
-                📍 San Juan de Lurigancho
-            </div>
-
-            <div style="flex: 1;">
-                <div class="tarjeta-alimento">
-                    <div class="tarjeta-header">
-                        <h4 class="tarjeta-titulo">Pan integral del día</h4>
-                        <span class="etiqueta-top" style="margin:0;">Hoy</span>
-                    </div>
-                    <div class="tarjeta-detalles">📦 3 kg · Panadería El Sol</div>
-                    <div class="tarjeta-detalles">📍 Av. Próceres 240 - 0.4 km</div>
-                    <div class="tarjeta-detalles">🕒 Recojo: 5:00 PM - 7:00 PM</div>
-                    <button class="tarjeta-btn-reservar" onclick="navegar('pantalla-confirmar-reojo')">Reservar</button>
-                </div>
-
-                <div class="tarjeta-alimento">
-                    <div class="tarjeta-header">
-                        <h4 class="tarjeta-titulo">Verduras frescas</h4>
-                        <span class="etiqueta-top" style="margin:0; background: #fff3cd; color: #856404;">Vence hoy</span>
-                    </div>
-                    <div class="tarjeta-detalles">📦 5 kg · Mercado Zárate</div>
-                    <div class="tarjeta-detalles">📍 Jr. Los Andes 12 - 1.1 km</div>
-                    <div class="tarjeta-detalles">🕒 Recojo: 3:00 PM - 5:00 PM</div>
-                    <button class="tarjeta-btn-reservar" onclick="navegar('pantalla-confirmar-reojo')">Reservar</button>
-                </div>
-
-                <div class="tarjeta-alimento">
-                    <div class="tarjeta-header">
-                        <h4 class="tarjeta-titulo">Arroz con leche</h4>
-                        <span class="etiqueta-top" style="margin:0; background: #e0f2f1; color: #004d40;">8 porciones</span>
-                    </div>
-                    <div class="tarjeta-detalles">📦 Rest. La Familia - Gratis</div>
-                    <div class="tarjeta-detalles">📍 Calle Lima 88 - 0.8 km</div>
-                    <div class="tarjeta-detalles">🕒 Recojo: 6:00 PM - 8:00 PM</div>
-                    <button class="tarjeta-btn-reservar" onclick="navegar('pantalla-confirmar-reojo')">Reservar</button>
-                </div>
+            <!-- CONTENEDOR DINÁMICO: Aquí se inyecta el HTML generado en el script JS -->
+            <div id="feed-alimentos" style="flex: 1; padding-bottom: 10px;">
+                <p style="text-align: center; color: #888; font-size: 0.9rem;">Cargando alimentos...</p>
             </div>
 
             <div class="nav-bar-inferior">
                 <div class="nav-item activo">🏠<br>Inicio</div>
                 <div class="nav-item">🔍<br>Buscar</div>
-                <div class="nav-item" onclick="navegar('pantalla-reserva-confirmada')">📅<br>Mis reservas</div>
-                <div class="nav-item" onclick="navegar('pantalla-bienvenida')">👤<br>Perfil</div>
+                <div class="nav-item" onclick="navegar('pantalla-bienvenida')">🚪<br>Salir</div>
             </div>
         </div>
 
-        <div id="pantalla-confirmar-reojo" class="pantalla" style="padding-top:0;">
-            <div class="header-verde-app" style="margin-bottom: 1rem;">
-                <span style="cursor:pointer; color:white; margin-bottom:5px; display:block; font-size:0.85rem;" onclick="navegar('pantalla-principal-receptor')">← Volver</span>
-                <h3>Confirmar recojo</h3>
-                <p>Elige fecha y hora</p>
-            </div>
-
-            <h4 style="margin: 0 0 5px 0; color:#333;">Pan integral del día</h4>
-            <p style="margin: 0 0 15px 0; font-size:0.8rem; color:var(--gris-texto);">Panadería El Sol · Av. Próceres 240</p>
-
-            <div class="form-group">
-                <label>Fecha de recojo</label>
-                <input type="date" value="2026-07-04">
-            </div>
-
-            <label>Hora disponible</label>
-            <div class="grid-horas">
-                <div class="hora-box seleccionada">5:00 PM</div>
-                <div class="hora-box">5:30 PM</div>
-                <div class="hora-box">6:00 PM</div>
-                <div class="hora-box">6:30 PM</div>
-                <div class="hora-box">7:00 PM</div>
-                <div class="hora-box">7:30 PM</div>
-            </div>
-
-            <label>Lugar de recojo</label>
-            <p style="margin: 0 0 15px 0; font-size: 0.85rem; font-weight: bold; color: var(--verde-principal);">📍 Av. Próceres 240, ingreso lateral</p>
-
-            <label>Nota del donante</label>
-            <div class="nota-donante">
-                "Tocar el timbre y preguntar por Señora Rosa"
-            </div>
-
-            <button class="btn btn-primario" style="margin-top:auto;" onclick="navegar('pantalla-reserva-confirmada')">Confirmar reserva</button>
-        </div>
-
-        <div id="pantalla-reserva-confirmada" class="pantalla">
-            <div style="text-align: center; margin-bottom: 1rem;">
-                <img src="logo.png" alt="Logo" style="width: 60px; margin: 0 auto;">
-                <h2 style="margin: 10px 0 2px 0;">¡Reserva confirmada!</h2>
-                <p style="margin:0; font-size:0.85rem; color:var(--gris-texto);">Muestra este código al llegar</p>
-            </div>
-
-            <div class="reserva-box-datos">
-                <div class="reserva-fila"><strong>Producto</strong> <span>Pan integral 3 kg</span></div>
-                <div class="reserva-fila"><strong>Lugar</strong> <span>Av. Próceres 240</span></div>
-                <div class="reserva-fila"><strong>Fecha</strong> <span>Hoy</span></div>
-                <div class="reserva-fila"><strong>Hora</strong> <span>5:00 PM</span></div>
-                <div class="reserva-fila"><strong>Estado</strong> <span style="color:green; font-weight:bold;">✓ Activa</span></div>
-            </div>
-
-            <div class="qr-placeholder">📦 [ CÓDIGO QR ]</div>
-            <div style="text-align: center; font-weight: bold; font-size: 1rem; color: #333; margin-bottom: 15px;">Código #NDV-0042</div>
-
-            <div class="caja-advertencia">
-                ⚠️ Si no puedes ir, cancela antes de las 4:00 PM para liberar el lugar a otra familia.
-            </div>
-
-            <button class="btn btn-primario" style="margin-top: auto;" onclick="navegar('pantalla-principal-receptor')">Volver al inicio</button>
-        </div>
-
+        <!-- =========================================
+             PANTALLA 8: PANEL DE CONTROL DEL DONANTE
+             Muestra métricas del usuario y formulario para nuevas publicaciones.
+             ========================================= -->
         <div id="pantalla-panel-donante" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
             <div class="header-verde-app" style="margin-bottom: 1rem;">
                 <h3>Panel donante</h3>
-                <p>Panadería El Sol</p>
+                <!-- Etiqueta dinámica actualizada vía JS al iniciar sesión -->
+                <p id="panel-nombre-negocio">Cargando nombre...</p>
             </div>
 
+            <!-- INDICADORES DINÁMICOS: Sus valores cambian según la BD -->
             <div class="row-metricas">
-                <div class="metrica-card"><span class="metrica-num">38</span><span class="metrica-lbl">kg salvados</span></div>
-                <div class="metrica-card"><span class="metrica-num">12</span><span class="metrica-lbl">familias</span></div>
-                <div class="metrica-card"><span class="metrica-num">5</span><span class="metrica-lbl">publicaciones</span></div>
+                <div class="metrica-card">
+                    <span id="panel-metrica-kg" class="metrica-num">0</span>
+                    <span class="metrica-lbl">kg salvados</span>
+                </div>
+                <div class="metrica-card">
+                    <span id="panel-metrica-familias" class="metrica-num">0</span>
+                    <span class="metrica-lbl">familias</span>
+                </div>
+                <div class="metrica-card">
+                    <span id="panel-metrica-pubs" class="metrica-num">0</span>
+                    <span class="metrica-lbl">publicaciones</span>
+                </div>
             </div>
 
             <h4 style="margin: 5px 0 10px 0; color: var(--verde-principal);">Publicar excedente</h4>
             
+            <!-- Formulario de creación de donación -->
             <div style="flex: 1; overflow-y: auto; padding-right: 2px;">
                 <div class="form-group">
                     <label>Nombre del producto</label>
-                    <input type="text" placeholder="Ej. Baguettes de ayer">
-                </div>
-                <div class="form-row">
-                    <div class="form-group" style="flex:1;">
-                        <label>Cantidad</label>
-                        <input type="text" placeholder="Ej. 3 kg">
-                    </div>
-                    <div class="form-group" style="flex:1;">
-                        <label>Categoría</label>
-                        <input type="text" placeholder="Panadería">
-                    </div>
+                    <input id="pub-nombre" type="text" placeholder="Ej. Pan francés">
                 </div>
                 <div class="form-group">
-                    <label>Fecha de vencimiento</label>
-                    <input type="date">
+                    <label>Cantidad (Ej. 10 unidades o 3 kg)</label>
+                    <input id="pub-cantidad" type="text" placeholder="Ej. 10 unidades">
                 </div>
                 <div class="form-group">
                     <label>Dirección de recojo</label>
-                    <input type="text" placeholder="Av. Próceres 240">
+                    <input id="pub-direccion" type="text" placeholder="Ej. Unidad Vecinal #3">
                 </div>
                 <div class="form-row">
                     <div class="form-group" style="flex:1;">
                         <label>Desde</label>
-                        <input type="time" value="17:00">
+                        <input id="pub-desde" type="time" value="18:00">
                     </div>
                     <div class="form-group" style="flex:1;">
                         <label>Hasta</label>
-                        <input type="time" value="19:00">
+                        <input id="pub-hasta" type="time" value="22:00">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Nota para el receptor (opcional)</label>
-                    <input type="text" placeholder="Tocar timbre...">
-                </div>
                 
-                <button class="btn btn-primario" style="background:#0d47a1; margin-top:5px;" onclick="alert('¡Excedente publicado exitosamente en el sistema!'); navegar('pantalla-principal-receptor')">Publicar ahora</button>
+                <!-- Ejecuta la subida de datos a la colección 'alimentos' -->
+                <button class="btn btn-primario" style="background:#0d47a1; margin-top:5px;" onclick="publicarExcedente()">Publicar ahora</button>
             </div>
 
             <div class="nav-bar-inferior">
                 <div class="nav-item activo">📊<br>Mi Panel</div>
-                <div class="nav-item" onclick="navegar('pantalla-principal-receptor')">👁️<br>Ver modo familia</div>
+                <div class="nav-item" onclick="irAlFeedFamilias()">👁️<br>Ver alimentos</div>
                 <div class="nav-item" onclick="navegar('pantalla-bienvenida')">🚪<br>Salir</div>
             </div>
         </div>
 
     </div>
 
+    <!-- =========================================
+         LÓGICA Y CONEXIÓN A BASE DE DATOS (FIREBASE SDK)
+         ========================================= -->
     <script type="module">
+        // 1. Importación de módulos específicos de Firebase (Core, Auth, Firestore)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-        import { getAuth } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
+        // 2. Configuración de credenciales del proyecto de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAx7QLpaa5LVCZgrdwwfzYyB01jCUrAhyI",
             authDomain: "nutre-abd25.firebaseapp.com",
@@ -459,39 +346,168 @@
             appId: "1:1020228962230:web:363b5462fef8232df76317"
         };
 
+        // 3. Inicialización de los servicios
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        console.log("¡Nutre conectado a Firebase v12.15.0!");
+        // 4. Variables Globales de control de sesión
+        // Almacenan la información temporal del usuario logueado en esta pestaña
+        window.usuarioActualUID = null;
+        window.usuarioActualNombre = "";
 
-        // Variable global interna para saber el rol elegido en Login
-        let tipoUsuarioActual = 'familia'; 
-        window.setLoginTipo = function(tipo) {
-            tipoUsuarioActual = tipo;
-            document.getElementById('login-tab-familia').classList.toggle('activo', tipo === 'familia');
-            document.getElementById('login-tab-donante').classList.toggle('activo', tipo === 'donante');
+        /* =========================================
+           MÉTODOS DE LA APLICACIÓN
+           ========================================= */
+
+        // CONTROLADOR DE NAVEGACIÓN
+        // Remueve la clase 'activa' de todas las pantallas y se la asigna al ID destino
+        window.navegar = function(idPantallaDestino) {
+            const pantallas = document.querySelectorAll('.pantalla');
+            pantallas.forEach(p => p.classList.remove('activa'));
+            document.getElementById(idPantallaDestino).classList.add('activa');
+            document.getElementById(idPantallaDestino).scrollTop = 0; // Reiniciar scroll
         }
 
-        window.ejecutarLogin = function() {
-            if(tipoUsuarioActual === 'familia') {
-                navegar('pantalla-principal-receptor');
-            } else {
+        // CONTROLADOR DE REGISTRO DE USUARIO (DONANTE)
+        // Recopila datos del DOM, crea la credencial en Firebase Auth y el documento en Firestore
+        window.registrarNegocio = async function() {
+            const nombre = document.getElementById('reg-don-nombre').value;
+            const email = document.getElementById('reg-don-email').value;
+            const pass = document.getElementById('reg-don-pass').value;
+
+            // Validación de campos vacíos
+            if(!nombre || !email || !pass) {
+                return alert("Por favor, completa todos los campos requeridos.");
+            }
+
+            try {
+                // Operación asíncrona: Crear cuenta en Authentication
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                window.usuarioActualUID = cred.user.uid;
+                window.usuarioActualNombre = nombre;
+
+                // Operación asíncrona: Generar documento de perfil en la colección "usuarios"
+                await setDoc(doc(db, "usuarios", window.usuarioActualUID), {
+                    nombre: nombre,
+                    rol: "donante",
+                    kgSalvados: 0,
+                    publicaciones: 0,
+                    familias: 0
+                });
+
+                // Actualización del DOM (Interfaz) para reflejar los nuevos datos
+                document.getElementById('panel-nombre-negocio').innerText = nombre;
+                document.getElementById('panel-metrica-kg').innerText = "0";
+                document.getElementById('panel-metrica-pubs').innerText = "0";
+                document.getElementById('panel-metrica-familias').innerText = "0";
+
+                // Redirección a la pantalla del panel
                 navegar('pantalla-panel-donante');
+            } catch (error) {
+                alert("Error al intentar registrar: Verifique formato de email y contraseña (mínimo 6 caracteres).");
+                console.error(error);
             }
         }
 
-        // Sistema central de Navegación SPA
-        window.navegar = function(idPantallaDestino) {
-            const pantallas = document.querySelectorAll('.pantalla');
-            pantallas.forEach(pantalla => {
-                pantalla.classList.remove('activa');
-            });
-            document.getElementById(idPantallaDestino).classList.add('activa');
-            
-            // Auto-scroll al inicio de la pantalla cargada
-            document.getElementById(idPantallaDestino).scrollTop = 0;
+        // CONTROLADOR DE INSERCIÓN DE DATOS (NUEVA PUBLICACIÓN)
+        // Guarda un nuevo documento en la colección "alimentos" y actualiza métricas del usuario
+        window.publicarExcedente = async function() {
+            // Verificación de autenticación activa
+            if(!window.usuarioActualUID) {
+                return alert("Sesión no detectada. Registre una cuenta de donante para publicar.");
+            }
+
+            // Lectura de valores del formulario
+            const producto = document.getElementById('pub-nombre').value;
+            const cantidad = document.getElementById('pub-cantidad').value;
+            const direccion = document.getElementById('pub-direccion').value;
+            const desde = document.getElementById('pub-desde').value;
+            const hasta = document.getElementById('pub-hasta').value;
+
+            if(!producto || !cantidad || !direccion) {
+                return alert("Los detalles del producto son obligatorios.");
+            }
+
+            try {
+                // Generar nuevo registro en la colección principal
+                await addDoc(collection(db, "alimentos"), {
+                    producto: producto,
+                    cantidad: cantidad,
+                    direccion: direccion,
+                    horario: `${desde} - ${hasta}`,
+                    donanteNombre: window.usuarioActualNombre
+                });
+
+                // Conversión de tipo para lógica de métricas (extracción de número base)
+                let numeroSalvado = parseFloat(cantidad) || 1;
+
+                // Actualización de registro existente usando Firebase Increment
+                await updateDoc(doc(db, "usuarios", window.usuarioActualUID), {
+                    publicaciones: increment(1),
+                    kgSalvados: increment(numeroSalvado)
+                });
+
+                // Actualización del estado visual en el panel sin recargar la página
+                let pubsVisuales = parseInt(document.getElementById('panel-metrica-pubs').innerText);
+                let kgVisuales = parseInt(document.getElementById('panel-metrica-kg').innerText);
+                document.getElementById('panel-metrica-pubs').innerText = pubsVisuales + 1;
+                document.getElementById('panel-metrica-kg').innerText = kgVisuales + numeroSalvado;
+
+                // Limpieza de campos tras inserción exitosa
+                document.getElementById('pub-nombre').value = '';
+                document.getElementById('pub-cantidad').value = '';
+
+                alert('Registro de excedente completado exitosamente.');
+                irAlFeedFamilias(); // Redirección automática a la vista general
+
+            } catch (error) {
+                alert("Fallo en la conexión. Verifique reglas de seguridad en Firestore (Modo Prueba requerido).");
+                console.error(error);
+            }
         }
+
+        // CONTROLADOR DE LECTURA DE DATOS (FEED PRINCIPAL)
+        // Consulta todos los documentos en "alimentos" y renderiza HTML dinámico
+        window.irAlFeedFamilias = async function() {
+            navegar('pantalla-principal-receptor');
+            const feed = document.getElementById('feed-alimentos');
+            feed.innerHTML = '<p style="text-align:center; margin-top: 20px;">Sincronizando base de datos...</p>';
+
+            try {
+                // Lectura (GET) de toda la colección
+                const querySnapshot = await getDocs(collection(db, "alimentos"));
+                feed.innerHTML = ''; 
+
+                // Manejo de estado vacío
+                if(querySnapshot.empty) {
+                    feed.innerHTML = '<p style="text-align:center; margin-top:20px; color:#666;">No existen registros de alimentos disponibles actualmente.</p>';
+                    return;
+                }
+
+                // Iteración sobre los documentos recuperados e inyección de HTML
+                querySnapshot.forEach((documento) => {
+                    const data = documento.data();
+                    feed.innerHTML += `
+                    <div class="tarjeta-alimento">
+                        <div class="tarjeta-header">
+                            <h4 class="tarjeta-titulo">${data.producto}</h4>
+                            <span class="etiqueta-top" style="margin:0;">Disponible</span>
+                        </div>
+                        <div class="tarjeta-detalles">📦 ${data.cantidad} · ${data.donanteNombre}</div>
+                        <div class="tarjeta-detalles">📍 ${data.direccion}</div>
+                        <div class="tarjeta-detalles">🕒 Recojo: ${data.horario}</div>
+                        <button class="tarjeta-btn-reservar" onclick="alert('Módulo de reservas en desarrollo para próxima iteración.')">Reservar</button>
+                    </div>`;
+                });
+            } catch (error) {
+                feed.innerHTML = '<p style="text-align:center; color:red;">Fallo al recuperar registros de la base de datos.</p>';
+                console.error(error);
+            }
+        }
+        
+        // Ejecución inicial automática al cargar el documento
+        window.onload = irAlFeedFamilias;
     </script>
 </body>
 </html>
