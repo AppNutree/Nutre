@@ -48,9 +48,7 @@
             animation: fadeIn 0.25s ease-in-out; 
             flex-direction: column; overflow-y: auto;
         }
-        .pantalla.activa { 
-            display: flex; 
-        }
+        .pantalla.activa { display: flex; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
@@ -78,7 +76,7 @@
         .checkbox-group input { margin-right: 8px; margin-top: 2px; accent-color: var(--verde-principal); }
         .link-volver { cursor: pointer; color: var(--gris-texto); margin-bottom: 12px; font-size: 0.85rem; display: inline-block; }
 
-        /* Botones de switch en el Login */
+        /* --- BOTONES DE SWITCH EN EL LOGIN --- */
         .toggle-container { display: flex; gap: 8px; margin-bottom: 15px; }
         .toggle-btn { flex: 1; padding: 9px; border: 1px solid #ccc; background: white; border-radius: 8px; cursor: pointer; color: var(--gris-texto); font-size: 0.85rem;}
         .toggle-btn.activo { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
@@ -101,6 +99,16 @@
         .nav-bar-inferior { display: flex; justify-content: space-around; background: white; border-top: 1px solid #eee; margin: auto -1.5rem -1.5rem -1.5rem; padding: 10px 0; position: sticky; bottom: 0; }
         .nav-item { text-align: center; font-size: 0.7rem; color: var(--gris-suave); cursor: pointer; flex: 1; }
         .nav-item.activo { color: var(--verde-principal); font-weight: bold; }
+
+        /* --- PANTALLAS DE RESERVA (RESTAURADAS) --- */
+        .grid-horas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0 15px 0; }
+        .hora-box { border: 1px solid #ddd; padding: 10px; text-align: center; border-radius: 6px; font-size: 0.8rem; cursor: pointer; background: white; font-weight: 500; }
+        .hora-box.seleccionada { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
+        .nota-donante { background: #fffde7; border-left: 4px solid #fdd835; padding: 10px; font-size: 0.8rem; border-radius: 4px; margin-bottom: 15px; font-style: italic; color: #555; }
+        .reserva-box-datos { background: var(--verde-claro); padding: 12px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 15px; }
+        .reserva-fila { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed rgba(0,0,0,0.05); }
+        .qr-placeholder { width: 100px; height: 100px; background: var(--verde-principal); margin: 15px auto; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; }
+        .caja-advertencia { background: var(--naranja-alerta); color: var(--naranja-texto); padding: 10px; border-radius: 8px; font-size: 0.75rem; line-height: 1.4; text-align: center; margin-bottom: 15px; }
 
         /* --- CUADRITOS DE NÚMEROS DEL PANEL DONANTE --- */
         .row-metricas { display: flex; gap: 8px; margin-bottom: 15px; }
@@ -145,30 +153,26 @@
             </div>
         </div>
 
-        <!-- PANTALLA 2: INICIAR SESIÓN (RESTAURADA) -->
+        <!-- PANTALLA 2: INICIAR SESIÓN -->
         <div id="pantalla-login" class="pantalla">
             <span class="link-volver" onclick="navegar('pantalla-bienvenida')">← Volver</span>
             <h2>Iniciar sesión</h2>
-            <label>¿Quién eres?</label>
-            <div class="toggle-container">
-                <button id="login-tab-familia" class="toggle-btn activo" onclick="setLoginTipo('familia')">Familia</button>
-                <button id="login-tab-donante" class="toggle-btn" onclick="setLoginTipo('donante')">Donante</button>
-            </div>
             
             <div class="form-group">
-                <label>Correo o celular</label>
-                <input type="email" placeholder="ejemplo@correo.com">
+                <label>Correo electrónico</label>
+                <!-- Se agregó ID a los inputs para que Firebase pueda leerlos -->
+                <input id="login-email" type="email" placeholder="ejemplo@correo.com">
             </div>
             <div class="form-group">
                 <label>Contraseña</label>
-                <input type="password" placeholder="••••••••">
+                <input id="login-pass" type="password" placeholder="••••••••">
             </div>
             <span class="olvide-pass">¿Olvidaste tu contraseña?</span>
             
             <button class="btn btn-primario" onclick="ejecutarLogin()">Ingresar</button>
             
             <div class="enlace-footer">
-                ¿No tienes cuenta? <span onclick="navegar('pantalla-registro-familia')">Regístrate gratis</span>
+                ¿No tienes cuenta? <span onclick="navegar('pantalla-bienvenida')">Regístrate aquí</span>
             </div>
         </div>
 
@@ -180,18 +184,19 @@
             
             <div class="form-group">
                 <label>Nombre completo</label>
-                <input type="text" placeholder="Tu nombre">
+                <!-- Se agregaron IDs para leer los datos de la familia -->
+                <input id="reg-fam-nombre" type="text" placeholder="Tu nombre">
             </div>
             <div class="form-group">
                 <label>Correo electrónico</label>
-                <input type="email" placeholder="ejemplo@correo.com">
+                <input id="reg-fam-email" type="email" placeholder="ejemplo@correo.com">
             </div>
             <div class="form-group">
                 <label>Contraseña</label>
-                <input type="password" placeholder="••••••••">
+                <input id="reg-fam-pass" type="password" placeholder="••••••••">
             </div>
             
-            <button class="btn btn-primario" style="margin-top: 10px;" onclick="irAlFeedFamilias()">Crear cuenta gratis</button>
+            <button class="btn btn-primario" style="margin-top: 10px;" onclick="registrarFamilia()">Crear cuenta gratis</button>
         </div>
 
         <!-- PANTALLA 4: REGISTRO DE NEGOCIO (DONANTE) -->
@@ -208,7 +213,7 @@
             </div>
             <div class="form-group">
                 <label>Dirección física</label>
-                <input id="reg-don-direccion" type="text" placeholder="Ej. Av. Próceres 240, SJL">
+                <input id="reg-don-direccion" type="text" placeholder="Ej. Av. Próceres 240">
             </div>
             <div class="form-group">
                 <label>Correo de contacto</label>
@@ -242,6 +247,63 @@
             </div>
         </div>
 
+        <!-- PANTALLA 6: ESCOGER HORA DE RECOJO (RESTAURADA) -->
+        <div id="pantalla-confirmar-reojo" class="pantalla" style="padding-top:0;">
+            <div class="header-verde-app" style="margin-bottom: 1rem;">
+                <span style="cursor:pointer; color:white; margin-bottom:5px; display:block; font-size:0.85rem;" onclick="navegar('pantalla-principal-receptor')">← Volver</span>
+                <h3>Confirmar recojo</h3>
+                <p>Elige fecha y hora</p>
+            </div>
+
+            <!-- Estos textos cambian solos según lo que se elija en la pantalla anterior -->
+            <h4 id="reserva-titulo-prod" style="margin: 0 0 5px 0; color:#333;">Cargando...</h4>
+            <p id="reserva-desc-prod" style="margin: 0 0 15px 0; font-size:0.8rem; color:var(--gris-texto);">Cargando detalles...</p>
+
+            <label>Hora disponible</label>
+            <div class="grid-horas">
+                <div class="hora-box seleccionada" onclick="seleccionarHora(this)">5:00 PM</div>
+                <div class="hora-box" onclick="seleccionarHora(this)">5:30 PM</div>
+                <div class="hora-box" onclick="seleccionarHora(this)">6:00 PM</div>
+                <div class="hora-box" onclick="seleccionarHora(this)">6:30 PM</div>
+                <div class="hora-box" onclick="seleccionarHora(this)">7:00 PM</div>
+            </div>
+
+            <label>Lugar de recojo</label>
+            <p id="reserva-lugar-recojo" style="margin: 0 0 15px 0; font-size: 0.85rem; font-weight: bold; color: var(--verde-principal);">📍 Cargando...</p>
+
+            <label>Nota del donante</label>
+            <div class="nota-donante">
+                "Por favor traer su propia bolsa o envase."
+            </div>
+
+            <button class="btn btn-primario" style="margin-top:auto;" onclick="confirmarReservaFinal()">Confirmar reserva</button>
+        </div>
+
+        <!-- PANTALLA 7: TICKET DE RESERVA CONFIRMADA (RESTAURADA) -->
+        <div id="pantalla-reserva-confirmada" class="pantalla">
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <img src="logo.png" alt="Logo" style="width: 60px; margin: 0 auto;">
+                <h2 style="margin: 10px 0 2px 0;">¡Reserva confirmada!</h2>
+                <p style="margin:0; font-size:0.85rem; color:var(--gris-texto);">Muestra este código al llegar</p>
+            </div>
+
+            <div class="reserva-box-datos">
+                <div class="reserva-fila"><strong>Producto</strong> <span id="ticket-prod">...</span></div>
+                <div class="reserva-fila"><strong>Lugar</strong> <span id="ticket-lugar">...</span></div>
+                <div class="reserva-fila"><strong>Fecha</strong> <span>Hoy</span></div>
+                <div class="reserva-fila"><strong>Estado</strong> <span style="color:green; font-weight:bold;">✓ Activa</span></div>
+            </div>
+
+            <div class="qr-placeholder">📦 [ CÓDIGO QR ]</div>
+            <div style="text-align: center; font-weight: bold; font-size: 1rem; color: #333; margin-bottom: 15px;">Código #NDV-0042</div>
+
+            <div class="caja-advertencia">
+                ⚠️ Si no puedes ir, cancela para liberar el lugar a otra familia.
+            </div>
+
+            <button class="btn btn-primario" style="margin-top: auto;" onclick="irAlFeedFamilias()">Volver al inicio</button>
+        </div>
+
         <!-- PANTALLA 8: MI PANEL (ZONA DONANTE) -->
         <div id="pantalla-panel-donante" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
             <div class="header-verde-app" style="margin-bottom: 1rem;">
@@ -249,7 +311,6 @@
                 <p id="panel-nombre-negocio">Cargando nombre...</p>
             </div>
 
-            <!-- Estos números cambian automáticamente con Firebase -->
             <div class="row-metricas">
                 <div class="metrica-card">
                     <span id="panel-metrica-kg" class="metrica-num">0</span>
@@ -267,14 +328,13 @@
 
             <h4 style="margin: 5px 0 10px 0; color: var(--verde-principal);">Publicar excedente</h4>
             
-            <!-- Formulario para regalar comida -->
             <div style="flex: 1; overflow-y: auto; padding-right: 2px;">
                 <div class="form-group">
                     <label>Nombre del producto</label>
                     <input id="pub-nombre" type="text" placeholder="Ej. Baguettes de ayer">
                 </div>
                 <div class="form-group">
-                    <label>Cantidad</label>
+                    <label>Cantidad (Ej. 10 unidades o 3 kg)</label>
                     <input id="pub-cantidad" type="text" placeholder="Ej. 3 kg">
                 </div>
                 <div class="form-group">
@@ -306,10 +366,10 @@
 
     <!-- CONECTAMOS CON FIREBASE AQUÍ ABAJO -->
     <script type="module">
-        // Importamos las herramientas de Google Firebase
+        // Se agregaron 'signInWithEmailAndPassword' y 'getDoc' para poder leer usuarios y comprobar contraseñas
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
         // Tus llaves secretas de conexión
         const firebaseConfig = {
@@ -321,59 +381,96 @@
             appId: "1:1020228962230:web:363b5462fef8232df76317"
         };
 
-        // Encendemos la base de datos
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Espacios para recordar quién está usando la app
         window.usuarioActualUID = null;
         window.usuarioActualNombre = "";
-        window.tipoUsuarioActual = 'familia'; 
 
-        // FUNCIÓN 1: Cambiar de pantalla fácilmente
+        // FUNCIÓN: Cambiar de pantalla
         window.navegar = function(idPantallaDestino) {
             const pantallas = document.querySelectorAll('.pantalla');
             pantallas.forEach(p => p.classList.remove('activa'));
-            
             document.getElementById(idPantallaDestino).classList.add('activa');
             document.getElementById(idPantallaDestino).scrollTop = 0; 
         }
 
-        // FUNCIÓN 2: Configurar los botones de Iniciar Sesión (Familia o Donante)
-        window.setLoginTipo = function(tipo) {
-            window.tipoUsuarioActual = tipo;
-            document.getElementById('login-tab-familia').classList.toggle('activo', tipo === 'familia');
-            document.getElementById('login-tab-donante').classList.toggle('activo', tipo === 'donante');
-        }
+        // FUNCIÓN: Iniciar Sesión de Verdad (Comprobando en la BD)
+        window.ejecutarLogin = async function() {
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
 
-        // FUNCIÓN 3: Acción del botón "Ingresar"
-        window.ejecutarLogin = function() {
-            if(window.tipoUsuarioActual === 'familia') {
-                irAlFeedFamilias(); 
-            } else {
-                navegar('pantalla-panel-donante');
+            if(!email || !pass) return alert("Por favor, ingresa tu correo y contraseña.");
+
+            try {
+                // Esto comprueba la contraseña en los servidores de Google
+                const cred = await signInWithEmailAndPassword(auth, email, pass);
+                window.usuarioActualUID = cred.user.uid;
+
+                // Buscamos si el usuario es "familia" o "donante" en la base de datos
+                const docSnap = await getDoc(doc(db, "usuarios", cred.user.uid));
+                if (docSnap.exists()) {
+                    const datos = docSnap.data();
+                    window.usuarioActualNombre = datos.nombre;
+                    
+                    // Si es donante, lo mandamos a su panel y cargamos sus números
+                    if(datos.rol === "donante") {
+                        document.getElementById('panel-nombre-negocio').innerText = datos.nombre;
+                        document.getElementById('panel-metrica-kg').innerText = datos.kgSalvados || 0;
+                        document.getElementById('panel-metrica-pubs').innerText = datos.publicaciones || 0;
+                        document.getElementById('panel-metrica-familias').innerText = datos.familias || 0;
+                        navegar('pantalla-panel-donante');
+                    } else {
+                        // Si es familia, lo mandamos a ver la comida
+                        irAlFeedFamilias();
+                    }
+                } else {
+                    irAlFeedFamilias();
+                }
+            } catch(error) {
+                alert("Error: Correo o contraseña incorrectos.");
             }
         }
 
-        // FUNCIÓN 4: Guardar al Donante en la base de datos
+        // FUNCIÓN: Crear cuenta real para Familias
+        window.registrarFamilia = async function() {
+            const nombre = document.getElementById('reg-fam-nombre').value;
+            const email = document.getElementById('reg-fam-email').value;
+            const pass = document.getElementById('reg-fam-pass').value;
+
+            if(!nombre || !email || !pass) return alert("Llena todos los campos.");
+
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                window.usuarioActualUID = cred.user.uid;
+                window.usuarioActualNombre = nombre;
+
+                await setDoc(doc(db, "usuarios", cred.user.uid), {
+                    nombre: nombre,
+                    rol: "familia"
+                });
+
+                irAlFeedFamilias();
+            } catch (error) {
+                alert("Error: Revisa el correo y que la contraseña tenga mínimo 6 letras.");
+            }
+        }
+
+        // FUNCIÓN: Crear cuenta real para Donantes
         window.registrarNegocio = async function() {
             const nombre = document.getElementById('reg-don-nombre').value;
             const email = document.getElementById('reg-don-email').value;
             const pass = document.getElementById('reg-don-pass').value;
 
-            if(!nombre || !email || !pass) {
-                return alert("Por favor, llena todos los campos.");
-            }
+            if(!nombre || !email || !pass) return alert("Llena todos los campos.");
 
             try {
-                // Creamos su cuenta
                 const cred = await createUserWithEmailAndPassword(auth, email, pass);
                 window.usuarioActualUID = cred.user.uid;
                 window.usuarioActualNombre = nombre;
 
-                // Creamos su perfil con sus números en cero
-                await setDoc(doc(db, "usuarios", window.usuarioActualUID), {
+                await setDoc(doc(db, "usuarios", cred.user.uid), {
                     nombre: nombre,
                     rol: "donante",
                     kgSalvados: 0,
@@ -381,7 +478,6 @@
                     familias: 0
                 });
 
-                // Cambiamos el texto en su panel para que diga su nombre
                 document.getElementById('panel-nombre-negocio').innerText = nombre;
                 document.getElementById('panel-metrica-kg').innerText = "0";
                 document.getElementById('panel-metrica-pubs').innerText = "0";
@@ -389,16 +485,13 @@
 
                 navegar('pantalla-panel-donante');
             } catch (error) {
-                alert("Error: Asegúrate que el correo esté bien escrito y la contraseña tenga 6 letras o más.");
-                console.error(error);
+                alert("Error: Revisa el correo y que la contraseña tenga mínimo 6 letras.");
             }
         }
 
-        // FUNCIÓN 5: Subir la comida a la nube
+        // FUNCIÓN: Subir la comida a la nube
         window.publicarExcedente = async function() {
-            if(!window.usuarioActualUID) {
-                return alert("Primero debes registrarte para publicar.");
-            }
+            if(!window.usuarioActualUID) return alert("Primero debes registrarte para publicar.");
 
             const producto = document.getElementById('pub-nombre').value;
             const cantidad = document.getElementById('pub-cantidad').value;
@@ -406,12 +499,9 @@
             const desde = document.getElementById('pub-desde').value;
             const hasta = document.getElementById('pub-hasta').value;
 
-            if(!producto || !cantidad || !direccion) {
-                return alert("Por favor, llena los datos del producto.");
-            }
+            if(!producto || !cantidad || !direccion) return alert("Por favor, llena los datos del producto.");
 
             try {
-                // Lo guardamos en Firebase
                 await addDoc(collection(db, "alimentos"), {
                     producto: producto,
                     cantidad: cantidad,
@@ -422,13 +512,11 @@
 
                 let numeroSalvado = parseFloat(cantidad) || 1;
 
-                // Sumamos a sus métricas en la nube
                 await updateDoc(doc(db, "usuarios", window.usuarioActualUID), {
                     publicaciones: increment(1),
                     kgSalvados: increment(numeroSalvado)
                 });
 
-                // Actualizamos los números que ve en la pantalla
                 let pubsVisuales = parseInt(document.getElementById('panel-metrica-pubs').innerText);
                 let kgVisuales = parseInt(document.getElementById('panel-metrica-kg').innerText);
                 document.getElementById('panel-metrica-pubs').innerText = pubsVisuales + 1;
@@ -442,11 +530,10 @@
 
             } catch (error) {
                 alert("Hubo un error guardando el alimento. Revisa tu base de datos.");
-                console.error(error);
             }
         }
 
-        // FUNCIÓN 6: Cargar las comidas guardadas y mostrarlas
+        // FUNCIÓN: Cargar las comidas guardadas y mostrarlas
         window.irAlFeedFamilias = async function() {
             navegar('pantalla-principal-receptor');
             const feed = document.getElementById('feed-alimentos');
@@ -461,6 +548,7 @@
                     return;
                 }
 
+                // Aquí creamos el botón Reservar que llama a iniciarReserva() mandándole los datos de la comida
                 querySnapshot.forEach((documento) => {
                     const data = documento.data();
                     feed.innerHTML += `
@@ -472,13 +560,41 @@
                         <div class="tarjeta-detalles">📦 ${data.cantidad} · ${data.donanteNombre}</div>
                         <div class="tarjeta-detalles">📍 ${data.direccion}</div>
                         <div class="tarjeta-detalles">🕒 Recojo: ${data.horario}</div>
-                        <button class="tarjeta-btn-reservar" onclick="alert('Pronto podrás reservar esto.')">Reservar</button>
+                        <button class="tarjeta-btn-reservar" onclick="iniciarReserva('${data.producto}', '${data.donanteNombre}', '${data.direccion}')">Reservar</button>
                     </div>`;
                 });
             } catch (error) {
                 feed.innerHTML = '<p style="text-align:center; color:red;">No se pudieron cargar los alimentos.</p>';
-                console.error(error);
             }
+        }
+
+        // FUNCIÓN: Efecto visual al tocar una hora en la Pantalla 6
+        window.seleccionarHora = function(elementoClickeado) {
+            document.querySelectorAll('.hora-box').forEach(caja => caja.classList.remove('seleccionada'));
+            elementoClickeado.classList.add('seleccionada');
+        }
+
+        // FUNCIÓN: Preparar la pantalla 6 con los datos reales del producto clickeado
+        window.iniciarReserva = function(nombreProducto, nombreDonante, direccion) {
+            document.getElementById('reserva-titulo-prod').innerText = nombreProducto;
+            document.getElementById('reserva-desc-prod').innerText = nombreDonante + " · " + direccion;
+            document.getElementById('reserva-lugar-recojo').innerText = "📍 " + direccion;
+            
+            // Mandamos a la persona a la pantalla de elegir hora
+            navegar('pantalla-confirmar-reojo');
+        }
+
+        // FUNCIÓN: Finalizar y crear el ticket en la pantalla 7
+        window.confirmarReservaFinal = function() {
+            // Copiamos el nombre del producto y la dirección al ticket final
+            document.getElementById('ticket-prod').innerText = document.getElementById('reserva-titulo-prod').innerText;
+            
+            // Le quitamos el icono de ubicación a la dirección para que se vea limpio
+            let direccionLimpia = document.getElementById('reserva-lugar-recojo').innerText.replace("📍 ", "");
+            document.getElementById('ticket-lugar').innerText = direccionLimpia;
+            
+            // Mandamos a la persona a ver su ticket QR
+            navegar('pantalla-reserva-confirmada');
         }
     </script>
 </body>
