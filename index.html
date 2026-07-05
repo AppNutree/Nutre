@@ -124,7 +124,7 @@
         .form-row { display: flex; gap: 8px; }
 
         /* --- 13. DISEÑO DE LA PANTALLA PRINCIPAL (El logo) --- */
-        .logo-img { width: 140px; height: 140px; object-fit: contain; border-radius: 24px; margin: 0 auto 1rem; display: block; } /* Logo más grande */
+        .logo-img { width: 140px; height: 140px; object-fit: contain; border-radius: 24px; margin: 0 auto 1rem; display: block; } 
         .header-central { text-align: center; margin-top: 0.5rem; margin-bottom: 1.5rem; }
         .header-central h1 { color: var(--verde-principal); margin: 0; font-size: 1.6rem; }
         .header-central p { color: var(--gris-texto); font-size: 0.85rem; margin-top: 4px; }
@@ -135,10 +135,8 @@
 </head>
 <body>
 
-    <!-- CAJA DONDE SE ENCUENTRAN TODAS LAS PANTALLAS DE LA APP -->
     <div id="app-container">
 
-        <!-- PANTALLA 1: Menú inicial con el Logo -->
         <div id="pantalla-bienvenida" class="pantalla activa">
             <div class="header-central">
                 <img src="logo.png" alt="Logo Nutre" class="logo-img">
@@ -151,17 +149,14 @@
                 <strong>Gratis. Siempre.</strong>
             </div>
             
-            <!-- Botones que te llevan al registro -->
             <button class="btn btn-primario" onclick="navegar('pantalla-registro-familia')">Soy una familia</button>
             <button class="btn btn-secundario" onclick="navegar('pantalla-registro-donante')">Soy un donante</button>
             
-            <!-- Letras pequeñas para los que ya tienen cuenta -->
             <div class="enlace-footer">
                 ¿Ya tienes cuenta? <span onclick="navegar('pantalla-login')">Ingresa aquí</span>
             </div>
         </div>
 
-        <!-- PANTALLA 2: Para ingresar si ya tienes cuenta -->
         <div id="pantalla-login" class="pantalla">
             <span class="link-volver" onclick="navegar('pantalla-bienvenida')">← Volver</span>
             <h2>Iniciar sesión</h2>
@@ -183,7 +178,6 @@
             </div>
         </div>
 
-        <!-- PANTALLA 3: Formulario para crear cuenta de Familia -->
         <div id="pantalla-registro-familia" class="pantalla">
             <span class="link-volver" onclick="navegar('pantalla-bienvenida')">← Volver</span>
             <div><span class="etiqueta-top">Registro — Familia</span></div>
@@ -205,7 +199,6 @@
             <button class="btn btn-primario" style="margin-top: 10px;" onclick="registrarFamilia()">Crear cuenta gratis</button>
         </div>
 
-        <!-- PANTALLA 4: Formulario para crear cuenta de Donante (Negocio) -->
         <div id="pantalla-registro-donante" class="pantalla" style="padding-top: 0;">
             <div class="header-verde-app" style="margin-bottom: 1rem;">
                 <span style="cursor:pointer; color:white; margin-bottom:10px; display:block; font-size: 0.85rem;" onclick="navegar('pantalla-bienvenida')">← Volver</span>
@@ -233,7 +226,6 @@
             <button class="btn btn-primario" onclick="registrarNegocio()">Registrar negocio</button>
         </div>
 
-        <!-- PANTALLA 5: La lista de comidas disponibles (Lo que ven las familias) -->
         <div id="pantalla-principal-receptor" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
             <div class="header-verde-app">
                 <h3>NoDesperdicies</h3>
@@ -241,19 +233,16 @@
             </div>
             <div class="ubicacion-bar">📍 Buscando cerca de ti...</div>
 
-            <!-- Espacio vacío donde el código pondrá los alimentos de la base de datos -->
             <div id="feed-alimentos" style="flex: 1; padding-bottom: 10px;">
                 <p style="text-align: center; color: #888; font-size: 0.9rem;">Cargando alimentos...</p>
             </div>
 
             <div class="nav-bar-inferior">
-                <!-- Se quitó el botón Buscar para las Familias -->
                 <div class="nav-item activo" onclick="irAInicio()">🏠<br>Inicio</div>
                 <div class="nav-item" onclick="navegar('pantalla-bienvenida')">🚪<br>Salir</div>
             </div>
         </div>
 
-        <!-- PANTALLA 6: Elegir a qué hora vas a recoger la comida -->
         <div id="pantalla-confirmar-reojo" class="pantalla" style="padding-top:0;">
             <div class="header-verde-app" style="margin-bottom: 1rem;">
                 <span style="cursor:pointer; color:white; margin-bottom:5px; display:block; font-size:0.85rem;" onclick="navegar('pantalla-principal-receptor')">← Volver</span>
@@ -261,7 +250,6 @@
                 <p>Elige fecha y hora</p>
             </div>
 
-            <!-- Textos que se llenan solos con la comida que elegiste -->
             <h4 id="reserva-titulo-prod" style="margin: 0 0 5px 0; color:#333;">Cargando...</h4>
             <p id="reserva-desc-prod" style="margin: 0 0 15px 0; font-size:0.8rem; color:var(--gris-texto);">Cargando detalles...</p>
 
@@ -271,7 +259,6 @@
             </div>
 
             <label>Hora disponible</label>
-            <!-- Este espacio ahora se llena solo con los horarios que puso el donante -->
             <div id="contenedor-horas" class="grid-horas">
                 <p style="font-size: 0.8rem; color: #888;">Cargando horarios...</p>
             </div>
@@ -287,7 +274,6 @@
             <button class="btn btn-primario" style="margin-top:auto;" onclick="confirmarReservaFinal()">Confirmar reserva</button>
         </div>
 
-        <!-- PANTALLA 7: El "Ticket" cuando ya confirmaste -->
         <div id="pantalla-reserva-confirmada" class="pantalla">
             <div style="text-align: center; margin-bottom: 1rem;">
                 <img src="logo.png" alt="Logo" style="width: 60px; margin: 0 auto;">
@@ -295,12 +281,11 @@
                 <p style="margin:0; font-size:0.85rem; color:var(--gris-texto);">Muestra este código al llegar</p>
             </div>
 
-            <!-- Detalles del ticket -->
             <div class="reserva-box-datos">
                 <div class="reserva-fila"><strong>Producto</strong> <span id="ticket-prod">...</span></div>
                 <div class="reserva-fila"><strong>Lugar</strong> <span id="ticket-lugar">...</span></div>
                 <div class="reserva-fila"><strong>Fecha</strong> <span id="ticket-fecha">Hoy</span></div>
-                <div class="reserva-fila"><strong>Hora</strong> <span id="ticket-hora">...</span></div> <!-- Añadido para mostrar la hora seleccionada -->
+                <div class="reserva-fila"><strong>Hora</strong> <span id="ticket-hora">...</span></div>
                 <div class="reserva-fila"><strong>Estado</strong> <span style="color:green; font-weight:bold;">✓ Activa</span></div>
             </div>
 
@@ -314,14 +299,12 @@
             <button class="btn btn-primario" style="margin-top: auto;" onclick="irAInicio()">Volver al inicio</button>
         </div>
 
-        <!-- PANTALLA 8: Panel de Control exclusivo para Donantes -->
         <div id="pantalla-panel-donante" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
             <div class="header-verde-app" style="margin-bottom: 1rem;">
                 <h3>Panel donante</h3>
                 <p id="panel-nombre-negocio">Cargando nombre...</p>
             </div>
 
-            <!-- Cuadritos con los logros del donante -->
             <div class="row-metricas">
                 <div class="metrica-card">
                     <span id="panel-metrica-kg" class="metrica-num">0</span>
@@ -339,7 +322,6 @@
 
             <h4 style="margin: 5px 0 10px 0; color: var(--verde-principal);">Publicar excedente</h4>
             
-            <!-- Formulario para regalar una comida nueva -->
             <div style="flex: 1; overflow-y: auto; padding-right: 2px;">
                 <div class="form-group">
                     <label>Nombre del producto</label>
@@ -376,7 +358,6 @@
 
     </div>
 
-    <!-- CONECTAMOS CON FIREBASE (La Base de Datos de Google) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
@@ -591,7 +572,6 @@
                         <div class="tarjeta-detalles">📦 ${data.cantidad} · ${data.donanteNombre}</div>
                         <div class="tarjeta-detalles">📍 ${data.direccion}</div>
                         <div class="tarjeta-detalles">🕒 Recojo: ${data.horario}</div>
-                        <!-- Este botón manda la información secreta para armar la pantalla de reserva -->
                         <button class="tarjeta-btn-reservar" onclick="iniciarReserva('${data.producto}', '${data.donanteNombre}', '${data.direccion}', '${data.horaDesde}', '${data.horaHasta}')">Reservar</button>
                     </div>`;
                 });
@@ -623,15 +603,16 @@
                 const [horaLimite, minLimite] = horaFin.split(':').map(Number);
                 
                 let horasGeneradas = 0;
-                // Va sumando de 30 en 30 minutos hasta llegar al límite
-                while ((horaActual < horaLimite || (horaActual === horaLimite && minActual <= minLimite)) && horasGeneradas < 8) {
-                    // Convertir la hora militar a formato normal (AM/PM)
+                
+                // Va sumando de 30 en 30 minutos hasta llegar a la hora límite que puso el donante
+                while ((horaActual < horaLimite || (horaActual === horaLimite && minActual <= minLimite)) && horasGeneradas < 24) {
+                    // Convierte el reloj militar a formato normal (AM/PM)
                     let ampm = horaActual >= 12 ? 'PM' : 'AM';
                     let hora12 = horaActual % 12 || 12;
                     let minutoStr = minActual === 0 ? '00' : '30';
                     let textoHora = `${hora12}:${minutoStr} ${ampm}`;
 
-                    // Creamos el botoncito y lo metemos en la pantalla
+                    // Creamos el botoncito de la hora y lo ponemos en la pantalla
                     let claseExtra = horasGeneradas === 0 ? ' seleccionada' : '';
                     contenedorHoras.innerHTML += `<div class="hora-box${claseExtra}" onclick="seleccionarHora(this)">${textoHora}</div>`;
                     
@@ -643,7 +624,7 @@
                     horasGeneradas++;
                 }
             } else {
-                // Si hubo un error guardando las horas antes, ponemos una por defecto
+                // Si hubo un error guardando las horas antes, ponemos una opción básica
                 contenedorHoras.innerHTML = `<div class="hora-box seleccionada" onclick="seleccionarHora(this)">En cualquier momento</div>`;
             }
 
@@ -655,7 +636,7 @@
             // Copiamos la comida
             document.getElementById('ticket-prod').innerText = document.getElementById('reserva-titulo-prod').innerText;
             
-            // Copiamos la dirección sin el icono de Google Maps
+            // Copiamos la dirección sin el icono de ubicación
             let direccionLimpia = document.getElementById('reserva-lugar-recojo').innerText.replace("📍 ", "");
             document.getElementById('ticket-lugar').innerText = direccionLimpia;
             
