@@ -28,14 +28,14 @@
             min-height: 100vh;
         }
 
-        /* --- CONTENEDOR PRINCIPAL (Diseño Tarjeta Web / Móvil) --- */
+        /* --- CONTENEDOR PRINCIPAL --- */
         #app-container {
             width: 100%; max-width: 410px; height: 100vh; max-height: 840px;
             background-color: #fcfdfc;
             box-shadow: 0 12px 30px rgba(0,0,0,0.2);
             overflow-y: auto; overflow-x: hidden; position: relative;
             display: flex; flex-direction: column;
-            border-radius: 12px; /* Borde suave y elegante para PC */
+            border-radius: 12px; 
         }
 
         #app-container::-webkit-scrollbar { width: 4px; }
@@ -64,7 +64,7 @@
         .btn-primario:hover { background-color: var(--verde-oscuro); }
         .btn-secundario { background-color: white; color: var(--verde-principal); border: 2px solid var(--verde-principal); }
 
-        /* --- CAJAS PARA ESCRIBIR TEXTO (FORMULARIOS) --- */
+        /* --- CAJAS PARA ESCRIBIR TEXTO --- */
         .form-group { margin-bottom: 1rem; }
         label { display: block; font-size: 0.8rem; color: var(--gris-texto); margin-bottom: 4px; font-weight: 500; }
         input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="time"], input[type="date"] {
@@ -82,7 +82,7 @@
         .toggle-btn.activo { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
         .olvide-pass { text-align: right; font-size: 0.75rem; color: var(--verde-principal); cursor: pointer; margin-top: -6px; margin-bottom: 15px; display: block; }
 
-        /* --- CABECERAS VERDES DE ARRIBA (Corregidas para diseño plano) --- */
+        /* --- CABECERAS VERDES DE ARRIBA --- */
         .header-verde-app { background-color: var(--verde-principal); color: white; margin: -1.5rem -1.5rem 1rem -1.5rem; padding: 1.5rem; border-radius: 0; }
         .header-verde-app h3 { margin: 0; font-size: 1.2rem; font-weight: 600; }
         .header-verde-app p { margin: 4px 0 0 0; font-size: 0.8rem; opacity: 0.85; }
@@ -118,9 +118,10 @@
         .form-row { display: flex; gap: 8px; }
 
         /* --- PANTALLA PRINCIPAL (LOGO Y BOTONES) --- */
-        .logo-img { width: 85px; height: 85px; object-fit: contain; border-radius: 20px; margin: 0 auto 0.8rem; display: block; }
+        /* Se aumentó el tamaño del logo */
+        .logo-img { width: 125px; height: 125px; object-fit: contain; border-radius: 24px; margin: 0 auto 1rem; display: block; }
         .header-central { text-align: center; margin-top: 0.5rem; margin-bottom: 1.5rem; }
-        .header-central h1 { color: var(--verde-principal); margin: 0; font-size: 1.5rem; }
+        .header-central h1 { color: var(--verde-principal); margin: 0; font-size: 1.6rem; }
         .header-central p { color: var(--gris-texto); font-size: 0.85rem; margin-top: 4px; }
         .caja-info { background-color: var(--verde-claro); padding: 1.2rem; border-radius: 12px; text-align: center; margin-bottom: 2rem; color: var(--verde-principal); font-size: 0.9rem; line-height: 1.4; }
         .enlace-footer { text-align: center; font-size: 0.85rem; color: var(--gris-texto); margin-top: auto; padding-top: 1rem; }
@@ -224,7 +225,7 @@
             <button class="btn btn-primario" onclick="registrarNegocio()">Registrar negocio</button>
         </div>
 
-        <!-- PANTALLA 5: VER COMIDA DISPONIBLE (ZONA FAMILIAS) -->
+        <!-- PANTALLA 5: VER COMIDA DISPONIBLE -->
         <div id="pantalla-principal-receptor" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
             <div class="header-verde-app">
                 <h3>NoDesperdicies</h3>
@@ -238,8 +239,8 @@
             </div>
 
             <div class="nav-bar-inferior">
-                <!-- Se aseguró que el botón inicio recargue la lista de alimentos -->
-                <div class="nav-item activo" onclick="irAlFeedFamilias()">🏠<br>Inicio</div>
+                <!-- Se cambió a irAInicio() para que sea inteligente -->
+                <div class="nav-item activo" onclick="irAInicio()">🏠<br>Inicio</div>
                 <div class="nav-item">🔍<br>Buscar</div>
                 <div class="nav-item" onclick="navegar('pantalla-bienvenida')">🚪<br>Salir</div>
             </div>
@@ -258,7 +259,6 @@
 
             <div class="form-group">
                 <label>Fecha de recojo</label>
-                <!-- Se agregó ID para poder leer la fecha elegida -->
                 <input id="input-fecha-recojo" type="date" value="2026-07-04">
             </div>
 
@@ -293,7 +293,6 @@
             <div class="reserva-box-datos">
                 <div class="reserva-fila"><strong>Producto</strong> <span id="ticket-prod">...</span></div>
                 <div class="reserva-fila"><strong>Lugar</strong> <span id="ticket-lugar">...</span></div>
-                <!-- ID para inyectar la fecha dinámicamente -->
                 <div class="reserva-fila"><strong>Fecha</strong> <span id="ticket-fecha">Hoy</span></div>
                 <div class="reserva-fila"><strong>Estado</strong> <span style="color:green; font-weight:bold;">✓ Activa</span></div>
             </div>
@@ -305,7 +304,8 @@
                 ⚠️ Si no puedes ir, cancela para liberar el lugar a otra familia.
             </div>
 
-            <button class="btn btn-primario" style="margin-top: auto;" onclick="irAlFeedFamilias()">Volver al inicio</button>
+            <!-- Se cambió a irAInicio() para que sea inteligente -->
+            <button class="btn btn-primario" style="margin-top: auto;" onclick="irAInicio()">Volver al inicio</button>
         </div>
 
         <!-- PANTALLA 8: MI PANEL (ZONA DONANTE) -->
@@ -387,8 +387,10 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        // Variables para saber quién está usando la app
         window.usuarioActualUID = null;
         window.usuarioActualNombre = "";
+        window.rolUsuarioLogueado = "";
 
         // FUNCIÓN: Cambiar de pantalla
         window.navegar = function(idPantallaDestino) {
@@ -396,6 +398,15 @@
             pantallas.forEach(p => p.classList.remove('activa'));
             document.getElementById(idPantallaDestino).classList.add('activa');
             document.getElementById(idPantallaDestino).scrollTop = 0; 
+        }
+
+        // FUNCIÓN: Botón Inicio Inteligente
+        window.irAInicio = function() {
+            if (window.rolUsuarioLogueado === 'donante') {
+                navegar('pantalla-panel-donante'); // Si es donante, regresa a publicar
+            } else {
+                irAlFeedFamilias(); // Si es familia, va a ver comida
+            }
         }
 
         // FUNCIÓN: Iniciar Sesión de Verdad
@@ -413,6 +424,7 @@
                 if (docSnap.exists()) {
                     const datos = docSnap.data();
                     window.usuarioActualNombre = datos.nombre;
+                    window.rolUsuarioLogueado = datos.rol;
                     
                     if(datos.rol === "donante") {
                         document.getElementById('panel-nombre-negocio').innerText = datos.nombre;
@@ -443,6 +455,7 @@
                 const cred = await createUserWithEmailAndPassword(auth, email, pass);
                 window.usuarioActualUID = cred.user.uid;
                 window.usuarioActualNombre = nombre;
+                window.rolUsuarioLogueado = "familia";
 
                 await setDoc(doc(db, "usuarios", cred.user.uid), {
                     nombre: nombre,
@@ -467,6 +480,7 @@
                 const cred = await createUserWithEmailAndPassword(auth, email, pass);
                 window.usuarioActualUID = cred.user.uid;
                 window.usuarioActualNombre = nombre;
+                window.rolUsuarioLogueado = "donante";
 
                 await setDoc(doc(db, "usuarios", cred.user.uid), {
                     nombre: nombre,
@@ -523,8 +537,8 @@
                 document.getElementById('pub-nombre').value = '';
                 document.getElementById('pub-cantidad').value = '';
 
-                alert('¡Publicado con éxito!');
-                irAlFeedFamilias(); 
+                // Se eliminó la función que te sacaba del panel, ahora te quedas aquí
+                alert('¡Publicado con éxito! Puedes registrar otro producto si deseas.');
 
             } catch (error) {
                 alert("Hubo un error guardando el alimento. Revisa tu base de datos.");
@@ -580,14 +594,13 @@
             navegar('pantalla-confirmar-reojo');
         }
 
-        // FUNCIÓN: Finalizar y crear el ticket en la pantalla 7 (Ahora incluye la fecha)
+        // FUNCIÓN: Finalizar y crear el ticket en la pantalla 7 
         window.confirmarReservaFinal = function() {
             document.getElementById('ticket-prod').innerText = document.getElementById('reserva-titulo-prod').innerText;
             
             let direccionLimpia = document.getElementById('reserva-lugar-recojo').innerText.replace("📍 ", "");
             document.getElementById('ticket-lugar').innerText = direccionLimpia;
             
-            // Leemos la fecha que se seleccionó en el calendario y la pasamos al ticket
             let fechaElegida = document.getElementById('input-fecha-recojo').value;
             document.getElementById('ticket-fecha').innerText = fechaElegida;
             
@@ -596,3 +609,4 @@
     </script>
 </body>
 </html>
+
