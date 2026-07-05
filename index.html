@@ -28,14 +28,13 @@
             min-height: 100vh;
         }
 
-        /* --- EL CUADRO QUE SIMULA EL CELULAR --- */
+        /* --- CONTENEDOR PRINCIPAL (Sin borde de celular) --- */
         #app-container {
             width: 100%; max-width: 410px; height: 100vh; max-height: 840px;
             background-color: #fcfdfc;
             box-shadow: 0 12px 30px rgba(0,0,0,0.3);
             overflow-y: auto; position: relative;
             display: flex; flex-direction: column;
-            border-radius: 30px; border: 8px solid #222; 
         }
 
         #app-container::-webkit-scrollbar { width: 4px; }
@@ -83,7 +82,7 @@
         .olvide-pass { text-align: right; font-size: 0.75rem; color: var(--verde-principal); cursor: pointer; margin-top: -6px; margin-bottom: 15px; display: block; }
 
         /* --- CABECERAS VERDES DE ARRIBA --- */
-        .header-verde-app { background-color: var(--verde-principal); color: white; margin: -1.5rem -1.5rem 1rem -1.5rem; padding: 1.5rem; border-radius: 20px 20px 0 0; }
+        .header-verde-app { background-color: var(--verde-principal); color: white; margin: -1.5rem -1.5rem 1rem -1.5rem; padding: 1.5rem; border-radius: 0 0 20px 20px; }
         .header-verde-app h3 { margin: 0; font-size: 1.2rem; font-weight: 600; }
         .header-verde-app p { margin: 4px 0 0 0; font-size: 0.8rem; opacity: 0.85; }
         .ubicacion-bar { display: flex; align-items: center; gap: 4px; font-size: 0.8rem; color: #d84315; font-weight: bold; margin-bottom: 12px; }
@@ -100,7 +99,7 @@
         .nav-item { text-align: center; font-size: 0.7rem; color: var(--gris-suave); cursor: pointer; flex: 1; }
         .nav-item.activo { color: var(--verde-principal); font-weight: bold; }
 
-        /* --- PANTALLAS DE RESERVA (RESTAURADAS) --- */
+        /* --- PANTALLAS DE RESERVA --- */
         .grid-horas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0 15px 0; }
         .hora-box { border: 1px solid #ddd; padding: 10px; text-align: center; border-radius: 6px; font-size: 0.8rem; cursor: pointer; background: white; font-weight: 500; }
         .hora-box.seleccionada { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
@@ -160,7 +159,6 @@
             
             <div class="form-group">
                 <label>Correo electrónico</label>
-                <!-- Se agregó ID a los inputs para que Firebase pueda leerlos -->
                 <input id="login-email" type="email" placeholder="ejemplo@correo.com">
             </div>
             <div class="form-group">
@@ -184,7 +182,6 @@
             
             <div class="form-group">
                 <label>Nombre completo</label>
-                <!-- Se agregaron IDs para leer los datos de la familia -->
                 <input id="reg-fam-nombre" type="text" placeholder="Tu nombre">
             </div>
             <div class="form-group">
@@ -247,7 +244,7 @@
             </div>
         </div>
 
-        <!-- PANTALLA 6: ESCOGER HORA DE RECOJO (RESTAURADA) -->
+        <!-- PANTALLA 6: ESCOGER HORA DE RECOJO -->
         <div id="pantalla-confirmar-reojo" class="pantalla" style="padding-top:0;">
             <div class="header-verde-app" style="margin-bottom: 1rem;">
                 <span style="cursor:pointer; color:white; margin-bottom:5px; display:block; font-size:0.85rem;" onclick="navegar('pantalla-principal-receptor')">← Volver</span>
@@ -255,9 +252,14 @@
                 <p>Elige fecha y hora</p>
             </div>
 
-            <!-- Estos textos cambian solos según lo que se elija en la pantalla anterior -->
             <h4 id="reserva-titulo-prod" style="margin: 0 0 5px 0; color:#333;">Cargando...</h4>
             <p id="reserva-desc-prod" style="margin: 0 0 15px 0; font-size:0.8rem; color:var(--gris-texto);">Cargando detalles...</p>
+
+            <!-- Se añadió nuevamente el campo de fecha -->
+            <div class="form-group">
+                <label>Fecha de recojo</label>
+                <input type="date" value="2026-07-04">
+            </div>
 
             <label>Hora disponible</label>
             <div class="grid-horas">
@@ -279,7 +281,7 @@
             <button class="btn btn-primario" style="margin-top:auto;" onclick="confirmarReservaFinal()">Confirmar reserva</button>
         </div>
 
-        <!-- PANTALLA 7: TICKET DE RESERVA CONFIRMADA (RESTAURADA) -->
+        <!-- PANTALLA 7: TICKET DE RESERVA CONFIRMADA -->
         <div id="pantalla-reserva-confirmada" class="pantalla">
             <div style="text-align: center; margin-bottom: 1rem;">
                 <img src="logo.png" alt="Logo" style="width: 60px; margin: 0 auto;">
@@ -352,11 +354,13 @@
                     </div>
                 </div>
                 
-                <button class="btn btn-primario" style="background:#0d47a1; margin-top:5px;" onclick="publicarExcedente()">Publicar ahora</button>
+                <!-- Se cambió la clase btn-primario para que mantenga el color verde uniforme -->
+                <button class="btn btn-primario" style="margin-top:5px;" onclick="publicarExcedente()">Publicar ahora</button>
             </div>
 
             <div class="nav-bar-inferior">
-                <div class="nav-item activo">📊<br>Mi Panel</div>
+                <!-- Se conectó el botón de Mi Panel a la función navegar -->
+                <div class="nav-item activo" onclick="navegar('pantalla-panel-donante')">📊<br>Mi Panel</div>
                 <div class="nav-item" onclick="irAlFeedFamilias()">👁️<br>Ver alimentos</div>
                 <div class="nav-item" onclick="navegar('pantalla-bienvenida')">🚪<br>Salir</div>
             </div>
@@ -366,12 +370,10 @@
 
     <!-- CONECTAMOS CON FIREBASE AQUÍ ABAJO -->
     <script type="module">
-        // Se agregaron 'signInWithEmailAndPassword' y 'getDoc' para poder leer usuarios y comprobar contraseñas
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-        // Tus llaves secretas de conexión
         const firebaseConfig = {
             apiKey: "AIzaSyAx7QLpaa5LVCZgrdwwfzYyB01jCUrAhyI",
             authDomain: "nutre-abd25.firebaseapp.com",
@@ -396,7 +398,7 @@
             document.getElementById(idPantallaDestino).scrollTop = 0; 
         }
 
-        // FUNCIÓN: Iniciar Sesión de Verdad (Comprobando en la BD)
+        // FUNCIÓN: Iniciar Sesión de Verdad
         window.ejecutarLogin = async function() {
             const email = document.getElementById('login-email').value;
             const pass = document.getElementById('login-pass').value;
@@ -404,17 +406,14 @@
             if(!email || !pass) return alert("Por favor, ingresa tu correo y contraseña.");
 
             try {
-                // Esto comprueba la contraseña en los servidores de Google
                 const cred = await signInWithEmailAndPassword(auth, email, pass);
                 window.usuarioActualUID = cred.user.uid;
 
-                // Buscamos si el usuario es "familia" o "donante" en la base de datos
                 const docSnap = await getDoc(doc(db, "usuarios", cred.user.uid));
                 if (docSnap.exists()) {
                     const datos = docSnap.data();
                     window.usuarioActualNombre = datos.nombre;
                     
-                    // Si es donante, lo mandamos a su panel y cargamos sus números
                     if(datos.rol === "donante") {
                         document.getElementById('panel-nombre-negocio').innerText = datos.nombre;
                         document.getElementById('panel-metrica-kg').innerText = datos.kgSalvados || 0;
@@ -422,7 +421,6 @@
                         document.getElementById('panel-metrica-familias').innerText = datos.familias || 0;
                         navegar('pantalla-panel-donante');
                     } else {
-                        // Si es familia, lo mandamos a ver la comida
                         irAlFeedFamilias();
                     }
                 } else {
@@ -548,7 +546,6 @@
                     return;
                 }
 
-                // Aquí creamos el botón Reservar que llama a iniciarReserva() mandándole los datos de la comida
                 querySnapshot.forEach((documento) => {
                     const data = documento.data();
                     feed.innerHTML += `
@@ -580,20 +577,16 @@
             document.getElementById('reserva-desc-prod').innerText = nombreDonante + " · " + direccion;
             document.getElementById('reserva-lugar-recojo').innerText = "📍 " + direccion;
             
-            // Mandamos a la persona a la pantalla de elegir hora
             navegar('pantalla-confirmar-reojo');
         }
 
         // FUNCIÓN: Finalizar y crear el ticket en la pantalla 7
         window.confirmarReservaFinal = function() {
-            // Copiamos el nombre del producto y la dirección al ticket final
             document.getElementById('ticket-prod').innerText = document.getElementById('reserva-titulo-prod').innerText;
             
-            // Le quitamos el icono de ubicación a la dirección para que se vea limpio
             let direccionLimpia = document.getElementById('reserva-lugar-recojo').innerText.replace("📍 ", "");
             document.getElementById('ticket-lugar').innerText = direccionLimpia;
             
-            // Mandamos a la persona a ver su ticket QR
             navegar('pantalla-reserva-confirmada');
         }
     </script>
