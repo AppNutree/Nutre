@@ -28,13 +28,14 @@
             min-height: 100vh;
         }
 
-        /* --- CONTENEDOR PRINCIPAL (Sin borde de celular) --- */
+        /* --- CONTENEDOR PRINCIPAL (Diseño Tarjeta Web / Móvil) --- */
         #app-container {
             width: 100%; max-width: 410px; height: 100vh; max-height: 840px;
             background-color: #fcfdfc;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-            overflow-y: auto; position: relative;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+            overflow-y: auto; overflow-x: hidden; position: relative;
             display: flex; flex-direction: column;
+            border-radius: 12px; /* Borde suave y elegante para PC */
         }
 
         #app-container::-webkit-scrollbar { width: 4px; }
@@ -81,8 +82,8 @@
         .toggle-btn.activo { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
         .olvide-pass { text-align: right; font-size: 0.75rem; color: var(--verde-principal); cursor: pointer; margin-top: -6px; margin-bottom: 15px; display: block; }
 
-        /* --- CABECERAS VERDES DE ARRIBA --- */
-        .header-verde-app { background-color: var(--verde-principal); color: white; margin: -1.5rem -1.5rem 1rem -1.5rem; padding: 1.5rem; border-radius: 0 0 20px 20px; }
+        /* --- CABECERAS VERDES DE ARRIBA (Corregidas para diseño plano) --- */
+        .header-verde-app { background-color: var(--verde-principal); color: white; margin: -1.5rem -1.5rem 1rem -1.5rem; padding: 1.5rem; border-radius: 0; }
         .header-verde-app h3 { margin: 0; font-size: 1.2rem; font-weight: 600; }
         .header-verde-app p { margin: 4px 0 0 0; font-size: 0.8rem; opacity: 0.85; }
         .ubicacion-bar { display: flex; align-items: center; gap: 4px; font-size: 0.8rem; color: #d84315; font-weight: bold; margin-bottom: 12px; }
@@ -128,7 +129,6 @@
 </head>
 <body>
 
-    <!-- AQUÍ EMPIEZA LA APP -->
     <div id="app-container">
 
         <!-- PANTALLA 1: BIENVENIDA -->
@@ -238,7 +238,8 @@
             </div>
 
             <div class="nav-bar-inferior">
-                <div class="nav-item activo">🏠<br>Inicio</div>
+                <!-- Se aseguró que el botón inicio recargue la lista de alimentos -->
+                <div class="nav-item activo" onclick="irAlFeedFamilias()">🏠<br>Inicio</div>
                 <div class="nav-item">🔍<br>Buscar</div>
                 <div class="nav-item" onclick="navegar('pantalla-bienvenida')">🚪<br>Salir</div>
             </div>
@@ -255,10 +256,10 @@
             <h4 id="reserva-titulo-prod" style="margin: 0 0 5px 0; color:#333;">Cargando...</h4>
             <p id="reserva-desc-prod" style="margin: 0 0 15px 0; font-size:0.8rem; color:var(--gris-texto);">Cargando detalles...</p>
 
-            <!-- Se añadió nuevamente el campo de fecha -->
             <div class="form-group">
                 <label>Fecha de recojo</label>
-                <input type="date" value="2026-07-04">
+                <!-- Se agregó ID para poder leer la fecha elegida -->
+                <input id="input-fecha-recojo" type="date" value="2026-07-04">
             </div>
 
             <label>Hora disponible</label>
@@ -292,7 +293,8 @@
             <div class="reserva-box-datos">
                 <div class="reserva-fila"><strong>Producto</strong> <span id="ticket-prod">...</span></div>
                 <div class="reserva-fila"><strong>Lugar</strong> <span id="ticket-lugar">...</span></div>
-                <div class="reserva-fila"><strong>Fecha</strong> <span>Hoy</span></div>
+                <!-- ID para inyectar la fecha dinámicamente -->
+                <div class="reserva-fila"><strong>Fecha</strong> <span id="ticket-fecha">Hoy</span></div>
                 <div class="reserva-fila"><strong>Estado</strong> <span style="color:green; font-weight:bold;">✓ Activa</span></div>
             </div>
 
@@ -354,12 +356,10 @@
                     </div>
                 </div>
                 
-                <!-- Se cambió la clase btn-primario para que mantenga el color verde uniforme -->
                 <button class="btn btn-primario" style="margin-top:5px;" onclick="publicarExcedente()">Publicar ahora</button>
             </div>
 
             <div class="nav-bar-inferior">
-                <!-- Se conectó el botón de Mi Panel a la función navegar -->
                 <div class="nav-item activo" onclick="navegar('pantalla-panel-donante')">📊<br>Mi Panel</div>
                 <div class="nav-item" onclick="irAlFeedFamilias()">👁️<br>Ver alimentos</div>
                 <div class="nav-item" onclick="navegar('pantalla-bienvenida')">🚪<br>Salir</div>
@@ -580,12 +580,16 @@
             navegar('pantalla-confirmar-reojo');
         }
 
-        // FUNCIÓN: Finalizar y crear el ticket en la pantalla 7
+        // FUNCIÓN: Finalizar y crear el ticket en la pantalla 7 (Ahora incluye la fecha)
         window.confirmarReservaFinal = function() {
             document.getElementById('ticket-prod').innerText = document.getElementById('reserva-titulo-prod').innerText;
             
             let direccionLimpia = document.getElementById('reserva-lugar-recojo').innerText.replace("📍 ", "");
             document.getElementById('ticket-lugar').innerText = direccionLimpia;
+            
+            // Leemos la fecha que se seleccionó en el calendario y la pasamos al ticket
+            let fechaElegida = document.getElementById('input-fecha-recojo').value;
+            document.getElementById('ticket-fecha').innerText = fechaElegida;
             
             navegar('pantalla-reserva-confirmada');
         }
