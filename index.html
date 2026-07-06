@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NUTRE - Conectamos alimentos con familias</title>
     <style>
-        /* --- 1. COLORES PRINCIPALES DE LA APLICACIÓN --- 
-           Aquí guardamos los colores que más se repiten para usarlos rápido */
+        /* COLORES Y DISEÑO GENERAL
+           Aquí se define el color de fondo, el tipo de letra y la caja principal de la aplicación */
         :root {
             --verde-principal: #1b431e;
             --verde-oscuro: #112b13;
@@ -19,7 +19,6 @@
             --naranja-texto: #856404;
         }
 
-        /* --- 2. FONDO GENERAL (LA PARTE VERDE AFUERA DE LA APP) --- */
         *, *::before, *::after { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -29,8 +28,6 @@
             min-height: 100vh;
         }
 
-        /* --- 3. EL CUADRO BLANCO DONDE VIVE TODA LA APLICACIÓN --- 
-           Se adapta al tamaño del celular o se queda como un cuadro en la PC */
         #app-container {
             width: 100%; max-width: 410px; height: 100vh; max-height: 840px;
             background-color: #fcfdfc;
@@ -40,12 +37,11 @@
             border-radius: 12px; 
         }
 
-        /* Hace que la barra para bajar (scroll) se vea delgadita y discreta */
         #app-container::-webkit-scrollbar { width: 4px; }
         #app-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 4px; }
 
-        /* --- 4. SISTEMA PARA MOSTRAR U OCULTAR LAS PANTALLAS --- 
-           Todas están escondidas por defecto, y solo se muestra la que tenga "activa" */
+        /* CONTROL DE PANTALLAS
+           Sistema para ocultar todas las vistas y mostrar solo la pantalla actual */
         .pantalla {
             display: none; 
             width: 100%; height: 100%; padding: 1.5rem;
@@ -54,13 +50,12 @@
         }
         .pantalla.activa { display: flex; }
 
-        /* Efecto para que la pantalla aparezca suavemente al cambiar */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- 5. TÍTULOS Y BOTONES --- */
+        /* COMPONENTES VISUALES (Botones, formularios y textos) */
         h2 { color: var(--verde-principal); margin-top: 0; font-size: 1.4rem; }
         .etiqueta-top { font-size: 0.75rem; background: var(--verde-claro); color: var(--verde-principal); padding: 4px 10px; border-radius: 12px; display: inline-block; margin-bottom: 12px; font-weight: bold;}
         
@@ -69,7 +64,6 @@
         .btn-primario:hover { background-color: var(--verde-oscuro); }
         .btn-secundario { background-color: white; color: var(--verde-principal); border: 2px solid var(--verde-principal); }
 
-        /* --- 6. CAJAS DONDE EL USUARIO ESCRIBE SU INFORMACIÓN --- */
         .form-group { margin-bottom: 1rem; }
         label { display: block; font-size: 0.8rem; color: var(--gris-texto); margin-bottom: 4px; font-weight: 500; }
         input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="time"], input[type="date"] {
@@ -77,36 +71,27 @@
         }
         input:focus { border-color: var(--verde-principal); background-color: white; }
 
-        /* Estilo para los cuadritos de "Acepto los términos" */
         .checkbox-group { display: flex; align-items: flex-start; margin-bottom: 8px; font-size: 0.8rem; color: var(--gris-texto); }
         .checkbox-group input { margin-right: 8px; margin-top: 2px; accent-color: var(--verde-principal); }
         .link-volver { cursor: pointer; color: var(--gris-texto); margin-bottom: 12px; font-size: 0.85rem; display: inline-block; }
 
-        /* --- 7. BOTONES ESPECIALES EN LA PANTALLA DE INICIAR SESIÓN (Familia / Donante) --- */
         .toggle-container { display: flex; gap: 8px; margin-bottom: 15px; }
         .toggle-btn { flex: 1; padding: 9px; border: 1px solid #ccc; background: white; border-radius: 8px; cursor: pointer; color: var(--gris-texto); font-size: 0.85rem;}
         .toggle-btn.activo { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
         .olvide-pass { text-align: right; font-size: 0.75rem; color: var(--verde-principal); cursor: pointer; margin-top: -6px; margin-bottom: 15px; display: block; }
 
-        /* --- 8. LA PARTE VERDE OSCURA DE ARRIBA (Encabezado) --- */
         .header-verde-app { background-color: var(--verde-principal); color: white; margin: -1.5rem -1.5rem 1rem -1.5rem; padding: 1.5rem; border-radius: 0; }
         .header-verde-app h3 { margin: 0; font-size: 1.2rem; font-weight: 600; }
         .header-verde-app p { margin: 4px 0 0 0; font-size: 0.8rem; opacity: 0.85; }
         .ubicacion-bar { display: flex; align-items: center; gap: 4px; font-size: 0.8rem; color: #d84315; font-weight: bold; margin-bottom: 12px; }
 
-        /* --- 9. DISEÑO DE LAS TARJETAS DE ALIMENTOS DISPONIBLES --- */
+        /* ESTILOS DE LAS TARJETAS DE ALIMENTOS Y RESERVAS */
         .tarjeta-alimento { background: white; border: 1px solid #eef2ee; border-radius: 12px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
         .tarjeta-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .tarjeta-titulo { font-weight: bold; color: #333; font-size: 1rem; margin: 0; }
         .tarjeta-detalles { font-size: 0.8rem; color: var(--gris-texto); margin: 4px 0; }
         .tarjeta-btn-reservar { background: var(--verde-principal); color: white; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 8px; font-size: 0.85rem; }
 
-        /* --- 10. LA BARRA DE BOTONES DE ABAJO (Menú inferior) --- */
-        .nav-bar-inferior { display: flex; justify-content: space-around; background: white; border-top: 1px solid #eee; margin: auto -1.5rem -1.5rem -1.5rem; padding: 10px 0; position: sticky; bottom: 0; }
-        .nav-item { text-align: center; font-size: 0.7rem; color: var(--gris-suave); cursor: pointer; flex: 1; }
-        .nav-item.activo { color: var(--verde-principal); font-weight: bold; }
-
-        /* --- 11. PANTALLAS DE RESERVA Y CONFIRMACIÓN --- */
         .grid-horas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0 15px 0; }
         .hora-box { border: 1px solid #ddd; padding: 10px; text-align: center; border-radius: 6px; font-size: 0.8rem; cursor: pointer; background: white; font-weight: 500; }
         .hora-box.seleccionada { background: var(--verde-claro); border-color: var(--verde-principal); color: var(--verde-principal); font-weight: bold; }
@@ -116,17 +101,19 @@
         .qr-placeholder { width: 100px; height: 100px; background: var(--verde-principal); margin: 15px auto; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; }
         .caja-advertencia { background: var(--naranja-alerta); color: var(--naranja-texto); padding: 10px; border-radius: 8px; font-size: 0.75rem; line-height: 1.4; text-align: center; margin-bottom: 15px; }
 
-        /* --- 12. CUADRITOS DE ESTADÍSTICAS DEL DONANTE (Mi Panel) --- */
+        /* ESTILOS EXCLUSIVOS DEL PANEL DONANTE Y MENÚ INFERIOR */
+        .nav-bar-inferior { display: flex; justify-content: space-around; background: white; border-top: 1px solid #eee; margin: auto -1.5rem -1.5rem -1.5rem; padding: 10px 0; position: sticky; bottom: 0; }
+        .nav-item { text-align: center; font-size: 0.7rem; color: var(--gris-suave); cursor: pointer; flex: 1; }
+        .nav-item.activo { color: var(--verde-principal); font-weight: bold; }
+
         .row-metricas { display: flex; gap: 8px; margin-bottom: 15px; }
         .metrica-card { flex: 1; background: var(--verde-claro); text-align: center; padding: 10px 4px; border-radius: 8px; border: 1px solid #d0e0d0; }
         .metrica-num { font-size: 1.2rem; font-weight: bold; color: var(--verde-principal); display: block; }
         .metrica-lbl { font-size: 0.65rem; color: var(--gris-texto); }
         .form-row { display: flex; gap: 8px; }
 
-        /* --- 13. DISEÑO DE LA PANTALLA PRINCIPAL (El logo) --- */
         .logo-img { width: 140px; height: 140px; object-fit: contain; border-radius: 24px; margin: 0 auto 1rem; display: block; } 
         .header-central { text-align: center; margin-top: 0.5rem; margin-bottom: 1.5rem; }
-        .header-central h1 { color: var(--verde-principal); margin: 0; font-size: 1.6rem; }
         .header-central p { color: var(--gris-texto); font-size: 0.85rem; margin-top: 4px; }
         .caja-info { background-color: var(--verde-claro); padding: 1.2rem; border-radius: 12px; text-align: center; margin-bottom: 2rem; color: var(--verde-principal); font-size: 0.9rem; line-height: 1.4; }
         .enlace-footer { text-align: center; font-size: 0.85rem; color: var(--gris-texto); margin-top: auto; padding-top: 1rem; }
@@ -137,21 +124,18 @@
 
     <div id="app-container">
 
+        <!-- ESTRUCTURA GENERAL DE PANTALLAS (De Bienvenida a Registro) -->
         <div id="pantalla-bienvenida" class="pantalla activa">
             <div class="header-central">
                 <img src="logo.png" alt="Logo Nutre" class="logo-img">
-                <h1>NUTRE</h1>
                 <p>Conectamos alimentos con familias</p>
             </div>
-            
             <div class="caja-info">
                 Comida en buen estado que sobra,<br>para familias que la necesitan.<br>
                 <strong>Gratis. Siempre.</strong>
             </div>
-            
             <button class="btn btn-primario" onclick="navegar('pantalla-registro-familia')">Soy una familia</button>
             <button class="btn btn-secundario" onclick="navegar('pantalla-registro-donante')">Soy un donante</button>
-            
             <div class="enlace-footer">
                 ¿Ya tienes cuenta? <span onclick="navegar('pantalla-login')">Ingresa aquí</span>
             </div>
@@ -160,7 +144,6 @@
         <div id="pantalla-login" class="pantalla">
             <span class="link-volver" onclick="navegar('pantalla-bienvenida')">← Volver</span>
             <h2>Iniciar sesión</h2>
-            
             <div class="form-group">
                 <label>Correo electrónico</label>
                 <input id="login-email" type="email" placeholder="ejemplo@correo.com">
@@ -170,9 +153,7 @@
                 <input id="login-pass" type="password" placeholder="••••••••">
             </div>
             <span class="olvide-pass">¿Olvidaste tu contraseña?</span>
-            
             <button class="btn btn-primario" onclick="ejecutarLogin()">Ingresar</button>
-            
             <div class="enlace-footer">
                 ¿No tienes cuenta? <span onclick="navegar('pantalla-bienvenida')">Regístrate aquí</span>
             </div>
@@ -182,7 +163,6 @@
             <span class="link-volver" onclick="navegar('pantalla-bienvenida')">← Volver</span>
             <div><span class="etiqueta-top">Registro — Familia</span></div>
             <h2>Crea tu cuenta</h2>
-            
             <div class="form-group">
                 <label>Nombre completo</label>
                 <input id="reg-fam-nombre" type="text" placeholder="Tu nombre">
@@ -195,7 +175,6 @@
                 <label>Contraseña</label>
                 <input id="reg-fam-pass" type="password" placeholder="••••••••">
             </div>
-            
             <button class="btn btn-primario" style="margin-top: 10px;" onclick="registrarFamilia()">Crear cuenta gratis</button>
         </div>
 
@@ -205,7 +184,6 @@
                 <h3>Registro donante</h3>
                 <p>Restaurante, mercado o negocio</p>
             </div>
-            
             <div class="form-group">
                 <label>Nombre del negocio</label>
                 <input id="reg-don-nombre" type="text" placeholder="Ej. Panadería El Sol">
@@ -222,21 +200,19 @@
                 <label>Contraseña (Mínimo 6 caracteres)</label>
                 <input id="reg-don-pass" type="password" placeholder="••••••••">
             </div>
-            
             <button class="btn btn-primario" onclick="registrarNegocio()">Registrar negocio</button>
         </div>
 
+        <!-- PANTALLAS DE LAS FAMILIAS (Ver productos y Reservar) -->
         <div id="pantalla-principal-receptor" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
             <div class="header-verde-app">
                 <h3>NoDesperdicies</h3>
                 <p>Alimentos disponibles cerca de ti</p>
             </div>
             <div class="ubicacion-bar">📍 Buscando cerca de ti...</div>
-
             <div id="feed-alimentos" style="flex: 1; padding-bottom: 10px;">
                 <p style="text-align: center; color: #888; font-size: 0.9rem;">Cargando alimentos...</p>
             </div>
-
             <div class="nav-bar-inferior">
                 <div class="nav-item activo" onclick="irAInicio()">🏠<br>Inicio</div>
                 <div class="nav-item" onclick="navegar('pantalla-bienvenida')">🚪<br>Salir</div>
@@ -249,28 +225,22 @@
                 <h3>Confirmar recojo</h3>
                 <p>Elige fecha y hora</p>
             </div>
-
             <h4 id="reserva-titulo-prod" style="margin: 0 0 5px 0; color:#333;">Cargando...</h4>
             <p id="reserva-desc-prod" style="margin: 0 0 15px 0; font-size:0.8rem; color:var(--gris-texto);">Cargando detalles...</p>
-
             <div class="form-group">
                 <label>Fecha de recojo</label>
                 <input id="input-fecha-recojo" type="date" value="2026-07-04">
             </div>
-
             <label>Hora disponible</label>
             <div id="contenedor-horas" class="grid-horas">
                 <p style="font-size: 0.8rem; color: #888;">Cargando horarios...</p>
             </div>
-
             <label>Lugar de recojo</label>
             <p id="reserva-lugar-recojo" style="margin: 0 0 15px 0; font-size: 0.85rem; font-weight: bold; color: var(--verde-principal);">📍 Cargando...</p>
-
             <label>Nota del donante</label>
             <div class="nota-donante">
                 "Por favor traer su propia bolsa o envase."
             </div>
-
             <button class="btn btn-primario" style="margin-top:auto;" onclick="confirmarReservaFinal()">Confirmar reserva</button>
         </div>
 
@@ -280,7 +250,6 @@
                 <h2 style="margin: 10px 0 2px 0;">¡Reserva confirmada!</h2>
                 <p style="margin:0; font-size:0.85rem; color:var(--gris-texto);">Muestra este código al llegar</p>
             </div>
-
             <div class="reserva-box-datos">
                 <div class="reserva-fila"><strong>Producto</strong> <span id="ticket-prod">...</span></div>
                 <div class="reserva-fila"><strong>Lugar</strong> <span id="ticket-lugar">...</span></div>
@@ -288,23 +257,20 @@
                 <div class="reserva-fila"><strong>Hora</strong> <span id="ticket-hora">...</span></div>
                 <div class="reserva-fila"><strong>Estado</strong> <span style="color:green; font-weight:bold;">✓ Activa</span></div>
             </div>
-
             <div class="qr-placeholder">📦 [ CÓDIGO QR ]</div>
             <div style="text-align: center; font-weight: bold; font-size: 1rem; color: #333; margin-bottom: 15px;">Código #NDV-0042</div>
-
             <div class="caja-advertencia">
                 ⚠️ Si no puedes ir, cancela para liberar el lugar a otra familia.
             </div>
-
             <button class="btn btn-primario" style="margin-top: auto;" onclick="irAInicio()">Volver al inicio</button>
         </div>
 
+        <!-- PANTALLA DE LOS DONANTES (Panel de control) -->
         <div id="pantalla-panel-donante" class="pantalla" style="padding-top: 0; padding-bottom: 0;">
             <div class="header-verde-app" style="margin-bottom: 1rem;">
                 <h3>Panel donante</h3>
                 <p id="panel-nombre-negocio">Cargando nombre...</p>
             </div>
-
             <div class="row-metricas">
                 <div class="metrica-card">
                     <span id="panel-metrica-kg" class="metrica-num">0</span>
@@ -319,9 +285,7 @@
                     <span class="metrica-lbl">publicaciones</span>
                 </div>
             </div>
-
             <h4 style="margin: 5px 0 10px 0; color: var(--verde-principal);">Publicar excedente</h4>
-            
             <div style="flex: 1; overflow-y: auto; padding-right: 2px;">
                 <div class="form-group">
                     <label>Nombre del producto</label>
@@ -345,10 +309,8 @@
                         <input id="pub-hasta" type="time" value="22:00">
                     </div>
                 </div>
-                
                 <button class="btn btn-primario" style="margin-top:5px;" onclick="publicarExcedente()">Publicar ahora</button>
             </div>
-
             <div class="nav-bar-inferior">
                 <div class="nav-item activo" onclick="navegar('pantalla-panel-donante')">📊<br>Mi Panel</div>
                 <div class="nav-item" onclick="irAlFeedFamilias()">👁️<br>Ver alimentos</div>
@@ -359,11 +321,11 @@
     </div>
 
     <script type="module">
+        // CONEXIÓN A LA BASE DE DATOS (FIREBASE)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-        // Estas son las llaves que conectan tu código con tu proyecto en Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAx7QLpaa5LVCZgrdwwfzYyB01jCUrAhyI",
             authDomain: "nutre-abd25.firebaseapp.com",
@@ -377,12 +339,13 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Espacios de memoria para saber quién está usando la app ahora mismo
+        // Variables para recordar al usuario que inició sesión
         window.usuarioActualUID = null;
         window.usuarioActualNombre = "";
         window.rolUsuarioLogueado = "";
 
-        // FUNCIÓN: Sirve para ocultar todas las pantallas y mostrar solo la que le pidas
+
+        // --- SISTEMA DE NAVEGACIÓN ---
         window.navegar = function(idPantallaDestino) {
             const pantallas = document.querySelectorAll('.pantalla');
             pantallas.forEach(p => p.classList.remove('activa'));
@@ -390,16 +353,16 @@
             document.getElementById(idPantallaDestino).scrollTop = 0; 
         }
 
-        // FUNCIÓN: Botón "Inicio" Inteligente. Sabe a dónde llevarte según quién seas
         window.irAInicio = function() {
             if (window.rolUsuarioLogueado === 'donante') {
-                navegar('pantalla-panel-donante'); // Si eres donante, vas a tu panel
+                navegar('pantalla-panel-donante');
             } else {
-                irAlFeedFamilias(); // Si eres familia, vas a la lista de comida
+                irAlFeedFamilias();
             }
         }
 
-        // FUNCIÓN: Revisa que el correo y contraseña sean correctos en la base de datos
+
+        // --- SISTEMA DE USUARIOS (Crear cuenta e iniciar sesión) ---
         window.ejecutarLogin = async function() {
             const email = document.getElementById('login-email').value;
             const pass = document.getElementById('login-pass').value;
@@ -407,11 +370,9 @@
             if(!email || !pass) return alert("Por favor, ingresa tu correo y contraseña.");
 
             try {
-                // Comprueba las credenciales
                 const cred = await signInWithEmailAndPassword(auth, email, pass);
                 window.usuarioActualUID = cred.user.uid;
 
-                // Busca en Firebase si la persona es familia o donante
                 const docSnap = await getDoc(doc(db, "usuarios", cred.user.uid));
                 if (docSnap.exists()) {
                     const datos = docSnap.data();
@@ -419,7 +380,6 @@
                     window.rolUsuarioLogueado = datos.rol;
                     
                     if(datos.rol === "donante") {
-                        // Si es donante, llena su panel con sus números y lo lleva ahí
                         document.getElementById('panel-nombre-negocio').innerText = datos.nombre;
                         document.getElementById('panel-metrica-kg').innerText = datos.kgSalvados || 0;
                         document.getElementById('panel-metrica-pubs').innerText = datos.publicaciones || 0;
@@ -436,7 +396,6 @@
             }
         }
 
-        // FUNCIÓN: Guarda a una Familia nueva en la base de datos
         window.registrarFamilia = async function() {
             const nombre = document.getElementById('reg-fam-nombre').value;
             const email = document.getElementById('reg-fam-email').value;
@@ -461,7 +420,6 @@
             }
         }
 
-        // FUNCIÓN: Guarda a un Donante nuevo en la base de datos
         window.registrarNegocio = async function() {
             const nombre = document.getElementById('reg-don-nombre').value;
             const email = document.getElementById('reg-don-email').value;
@@ -494,11 +452,11 @@
             }
         }
 
-        // FUNCIÓN: El Donante envía la comida a la base de datos
+
+        // --- SISTEMA DE ALIMENTOS (Publicar, mostrar y reservar) ---
         window.publicarExcedente = async function() {
             if(!window.usuarioActualUID) return alert("Primero debes registrarte para publicar.");
 
-            // Tomamos lo que escribió en las cajitas
             const producto = document.getElementById('pub-nombre').value;
             const cantidad = document.getElementById('pub-cantidad').value;
             const direccion = document.getElementById('pub-direccion').value;
@@ -508,33 +466,28 @@
             if(!producto || !cantidad || !direccion) return alert("Por favor, llena los datos del producto.");
 
             try {
-                // Lo guardamos en la nube
                 await addDoc(collection(db, "alimentos"), {
                     producto: producto,
                     cantidad: cantidad,
                     direccion: direccion,
                     horaDesde: desde,
                     horaHasta: hasta,
-                    horario: `${desde} - ${hasta}`, // Lo guardamos así también para mostrarlo fácil en la lista
+                    horario: `${desde} - ${hasta}`,
                     donanteNombre: window.usuarioActualNombre
                 });
 
-                // Averiguamos el número aproximado de kilos/unidades para sumarlo a su perfil
                 let numeroSalvado = parseFloat(cantidad) || 1;
 
-                // Le aumentamos sus puntos en Firebase
                 await updateDoc(doc(db, "usuarios", window.usuarioActualUID), {
                     publicaciones: increment(1),
                     kgSalvados: increment(numeroSalvado)
                 });
 
-                // Le actualizamos los números que ve en la pantalla de su celular
                 let pubsVisuales = parseInt(document.getElementById('panel-metrica-pubs').innerText);
                 let kgVisuales = parseInt(document.getElementById('panel-metrica-kg').innerText);
                 document.getElementById('panel-metrica-pubs').innerText = pubsVisuales + 1;
                 document.getElementById('panel-metrica-kg').innerText = kgVisuales + numeroSalvado;
 
-                // Vaciamos las cajas para que pueda publicar otra cosa si quiere
                 document.getElementById('pub-nombre').value = '';
                 document.getElementById('pub-cantidad').value = '';
 
@@ -545,7 +498,6 @@
             }
         }
 
-        // FUNCIÓN: Trae todas las comidas de la base de datos y arma la lista
         window.irAlFeedFamilias = async function() {
             navegar('pantalla-principal-receptor');
             const feed = document.getElementById('feed-alimentos');
@@ -560,7 +512,6 @@
                     return;
                 }
 
-                // Por cada comida que encuentre, crea un "cuadrito" visual con sus datos
                 querySnapshot.forEach((documento) => {
                     const data = documento.data();
                     feed.innerHTML += `
@@ -580,39 +531,31 @@
             }
         }
 
-        // FUNCIÓN: Cambia el color del cuadrito de hora cuando lo tocas
         window.seleccionarHora = function(elementoClickeado) {
             document.querySelectorAll('.hora-box').forEach(caja => caja.classList.remove('seleccionada'));
             elementoClickeado.classList.add('seleccionada');
         }
 
-        // FUNCIÓN: Prepara la pantalla de elegir hora con los datos reales de la comida
         window.iniciarReserva = function(nombreProducto, nombreDonante, direccion, horaInicio, horaFin) {
-            // Ponemos los nombres de la comida en los textos
             document.getElementById('reserva-titulo-prod').innerText = nombreProducto;
             document.getElementById('reserva-desc-prod').innerText = nombreDonante + " · " + direccion;
             document.getElementById('reserva-lugar-recojo').innerText = "📍 " + direccion;
             
-            // Lógica para crear las cajitas de hora según lo que dijo el donante
             const contenedorHoras = document.getElementById('contenedor-horas');
-            contenedorHoras.innerHTML = ''; // Limpiamos las horas anteriores
+            contenedorHoras.innerHTML = ''; 
 
-            // Si el donante puso horas correctas, generamos cuadritos cada media hora
             if(horaInicio && horaFin) {
                 let [horaActual, minActual] = horaInicio.split(':').map(Number);
                 const [horaLimite, minLimite] = horaFin.split(':').map(Number);
                 
                 let horasGeneradas = 0;
                 
-                // Va sumando de 30 en 30 minutos hasta llegar a la hora límite que puso el donante
                 while ((horaActual < horaLimite || (horaActual === horaLimite && minActual <= minLimite)) && horasGeneradas < 24) {
-                    // Convierte el reloj militar a formato normal (AM/PM)
                     let ampm = horaActual >= 12 ? 'PM' : 'AM';
                     let hora12 = horaActual % 12 || 12;
                     let minutoStr = minActual === 0 ? '00' : '30';
                     let textoHora = `${hora12}:${minutoStr} ${ampm}`;
 
-                    // Creamos el botoncito de la hora y lo ponemos en la pantalla
                     let claseExtra = horasGeneradas === 0 ? ' seleccionada' : '';
                     contenedorHoras.innerHTML += `<div class="hora-box${claseExtra}" onclick="seleccionarHora(this)">${textoHora}</div>`;
                     
@@ -624,27 +567,21 @@
                     horasGeneradas++;
                 }
             } else {
-                // Si hubo un error guardando las horas antes, ponemos una opción básica
                 contenedorHoras.innerHTML = `<div class="hora-box seleccionada" onclick="seleccionarHora(this)">En cualquier momento</div>`;
             }
 
             navegar('pantalla-confirmar-reojo');
         }
 
-        // FUNCIÓN: Genera el ticket final con todos los datos que elegiste
         window.confirmarReservaFinal = function() {
-            // Copiamos la comida
             document.getElementById('ticket-prod').innerText = document.getElementById('reserva-titulo-prod').innerText;
             
-            // Copiamos la dirección sin el icono de ubicación
             let direccionLimpia = document.getElementById('reserva-lugar-recojo').innerText.replace("📍 ", "");
             document.getElementById('ticket-lugar').innerText = direccionLimpia;
             
-            // Copiamos la fecha
             let fechaElegida = document.getElementById('input-fecha-recojo').value;
             document.getElementById('ticket-fecha').innerText = fechaElegida;
 
-            // Buscamos cuál fue el cuadrito verde (la hora seleccionada) y copiamos su texto
             let horaSeleccionada = document.querySelector('.hora-box.seleccionada');
             let textoHoraFinal = horaSeleccionada ? horaSeleccionada.innerText : 'Hora a coordinar';
             document.getElementById('ticket-hora').innerText = textoHoraFinal;
